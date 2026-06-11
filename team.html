@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team Detail - WorldCup2026Hub</title>
+    <link rel="stylesheet" href="detail.css">
+  </head>
+  <body data-page="team">
+    <header class="topbar">
+      <a href="index.html">WorldCup2026Hub</a>
+      <span>Team detail</span>
+    </header>
+
+    <main class="detail-shell">
+      <section class="detail-hero">
+        <p class="eyebrow" data-team-group>Group A</p>
+        <h1 data-team-name>Canada</h1>
+        <p data-team-meta>CONCACAF / profile draft</p>
+      </section>
+
+      <section class="panel-grid" aria-label="Team detail sections">
+        <article class="panel">
+          <p class="eyebrow">Matches</p>
+          <h2>Linked matches</h2>
+          <ul class="source-list" data-team-matches></ul>
+        </article>
+
+        <article class="panel">
+          <p class="eyebrow">Review notes</p>
+          <h2>Team watchlist</h2>
+          <p>Space for tactical themes, players to monitor, and post-match updates.</p>
+        </article>
+
+        <article class="panel panel-wide">
+          <p class="eyebrow">Reference sources</p>
+          <h2>Sources</h2>
+          <ul class="source-list" data-source-list></ul>
+        </article>
+      </section>
+    </main>
+
+    <script src="detail.js"></script>
+  </body>
+</html>
