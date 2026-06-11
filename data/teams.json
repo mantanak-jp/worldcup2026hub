@@ -1,0 +1,74 @@
+[
+  {
+    "id": "team-canada",
+    "name": "Canada",
+    "short_name": "CAN",
+    "confederation": "CONCACAF",
+    "group": "A",
+    "status": "qualified",
+    "profile_status": "draft",
+    "source_ids": [
+      "source-fifa-teams"
+    ],
+    "notes": "Host nation sample profile."
+  },
+  {
+    "id": "team-usa",
+    "name": "United States",
+    "short_name": "USA",
+    "confederation": "CONCACAF",
+    "group": "B",
+    "status": "qualified",
+    "profile_status": "draft",
+    "source_ids": [
+      "source-fifa-teams"
+    ],
+    "notes": "Host nation sample profile."
+  },
+  {
+    "id": "team-mexico",
+    "name": "Mexico",
+    "short_name": "MEX",
+    "confederation": "CONCACAF",
+    "group": "C",
+    "status": "qualified",
+    "profile_status": "draft",
+    "source_ids": [
+      "source-fifa-teams"
+    ],
+    "notes": "Host nation sample profile."
+  },
+  {
+    "id": "team-placeholder-a2",
+    "name": "Group A opponent",
+    "short_name": "A2",
+    "confederation": "TBD",
+    "group": "A",
+    "status": "placeholder",
+    "profile_status": "todo",
+    "source_ids": [],
+    "notes": "Placeholder team for data-shape testing."
+  },
+  {
+    "id": "team-placeholder-b2",
+    "name": "Group B opponent",
+    "short_name": "B2",
+    "confederation": "TBD",
+    "group": "B",
+    "status": "placeholder",
+    "profile_status": "todo",
+    "source_ids": [],
+    "notes": "Placeholder team for data-shape testing."
+  },
+  {
+    "id": "team-placeholder-c2",
+    "name": "Group C opponent",
+    "short_name": "C2",
+    "confederation": "TBD",
+    "group": "C",
+    "status": "placeholder",
+    "profile_status": "todo",
+    "source_ids": [],
+    "notes": "Placeholder team for data-shape testing."
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "source-fifa-match-centre",
+    "name": "FIFA Match Centre",
+    "url": "https://www.fifa.com/",
+    "language": "en",
+    "source_type": "official",
+    "allowed_use": "metadata-and-link-only",
+    "checked_status": "manual-review-needed",
+    "related_match_ids": [
+      "match-001",
+      "match-002",
+      "match-003"
+    ],
+    "related_team_ids": [],
+    "japanese_note": "試合情報の参照元候補。本文や画像は保存しない。"
+  },
+  {
+    "id": "source-fifa-teams",
+    "name": "FIFA Teams",
+    "url": "https://www.fifa.com/",
+    "language": "en",
+    "source_type": "official",
+    "allowed_use": "metadata-and-link-only",
+    "checked_status": "manual-review-needed",
+    "related_match_ids": [],
+    "related_team_ids": [
+      "team-canada",
+      "team-usa",
+      "team-mexico"
+    ],
+    "japanese_note": "チーム情報の参照元候補。本文や画像は保存しない。"
+  }
+]

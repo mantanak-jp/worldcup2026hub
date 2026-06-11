@@ -1,0 +1,68 @@
+[
+  {
+    "id": "match-001",
+    "competition": "FIFA World Cup 2026",
+    "stage": "group",
+    "group": "A",
+    "matchday": 1,
+    "kickoff": "2026-06-11T19:00:00-04:00",
+    "venue_id": "venue-example-001",
+    "home_team_id": "team-canada",
+    "away_team_id": "team-placeholder-a2",
+    "status": "scheduled",
+    "score": {
+      "home": null,
+      "away": null
+    },
+    "result_report_id": "report-match-001",
+    "tactical_review_id": "review-match-001",
+    "source_ids": [
+      "source-fifa-match-centre"
+    ],
+    "notes": "Sample opening match record for layout and data-shape testing."
+  },
+  {
+    "id": "match-002",
+    "competition": "FIFA World Cup 2026",
+    "stage": "group",
+    "group": "B",
+    "matchday": 1,
+    "kickoff": "2026-06-12T18:00:00-05:00",
+    "venue_id": "venue-example-002",
+    "home_team_id": "team-usa",
+    "away_team_id": "team-placeholder-b2",
+    "status": "scheduled",
+    "score": {
+      "home": null,
+      "away": null
+    },
+    "result_report_id": "report-match-002",
+    "tactical_review_id": "review-match-002",
+    "source_ids": [
+      "source-fifa-match-centre"
+    ],
+    "notes": "Sample host-team match record."
+  },
+  {
+    "id": "match-003",
+    "competition": "FIFA World Cup 2026",
+    "stage": "group",
+    "group": "C",
+    "matchday": 1,
+    "kickoff": "2026-06-13T20:00:00-06:00",
+    "venue_id": "venue-example-003",
+    "home_team_id": "team-mexico",
+    "away_team_id": "team-placeholder-c2",
+    "status": "scheduled",
+    "score": {
+      "home": null,
+      "away": null
+    },
+    "result_report_id": "report-match-003",
+    "tactical_review_id": "review-match-003",
+    "source_ids": [
+      "source-fifa-match-centre"
+    ],
+    "notes": "Sample host-team match record."
+  }
+]
