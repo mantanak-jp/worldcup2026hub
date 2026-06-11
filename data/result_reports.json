@@ -1,0 +1,38 @@
+[
+  {
+    "id": "report-match-001",
+    "match_id": "match-001",
+    "status": "not_started",
+    "headline": "",
+    "summary_ja": "",
+    "key_events": [],
+    "updated_at": null,
+    "source_ids": [
+      "source-fifa-match-centre"
+    ]
+  },
+  {
+    "id": "report-match-002",
+    "match_id": "match-002",
+    "status": "not_started",
+    "headline": "",
+    "summary_ja": "",
+    "key_events": [],
+    "updated_at": null,
+    "source_ids": [
+      "source-fifa-match-centre"
+    ]
+  },
+  {
+    "id": "report-match-003",
+    "match_id": "match-003",
+    "status": "not_started",
+    "headline": "",
+    "summary_ja": "",
+    "key_events": [],
+    "updated_at": null,
+    "source_ids": [
+      "source-fifa-match-centre"
+    ]
+  }
+]

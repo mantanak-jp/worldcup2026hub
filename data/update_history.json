@@ -1,0 +1,12 @@
+[
+  {
+    "id": "update-001",
+    "target_type": "repository",
+    "target_id": "data-model-foundation",
+    "status": "draft",
+    "summary": "Initial JSON data model and placeholder records added.",
+    "updated_by": "codex",
+    "updated_at": "2026-06-12T00:00:00+09:00",
+    "source_ids": []
+  }
+]
