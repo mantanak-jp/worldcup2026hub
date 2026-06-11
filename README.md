@@ -26,3 +26,11 @@ This repository currently contains the initial documentation scaffold. Add appli
 
 - [Project Overview](docs/overview.md)
 - [Operations Notes](docs/operations.md)
+
+## Static MVP
+
+The initial site shell is plain HTML, CSS, and JavaScript so it can run directly on GitHub Pages without a build step.
+
+- `index.html`: top page, match list, team list, and coverage status sections.
+- `styles.css`: responsive layout and visual styling.
+- `app.js`: sample client-side data rendering for the MVP shell.

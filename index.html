@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WorldCup2026Hub</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="#top">WorldCup2026Hub</a>
+        <div class="nav-links">
+          <a href="#matches">Matches</a>
+          <a href="#teams">Teams</a>
+          <a href="#status">Status</a>
+        </div>
+      </nav>
+      <section class="hero" id="top">
+        <p class="eyebrow">Personal World Cup research hub</p>
+        <h1>2026 World Cup viewing notes, match status, and team references.</h1>
+        <p class="hero-copy">A static-first workspace for match cards, team lists, result reports, tactical review status, and source references.</p>
+      </section>
+    </header>
+
+    <main>
+      <section class="section" id="matches" aria-labelledby="matches-title">
+        <div class="section-heading">
+          <p class="eyebrow">Schedule</p>
+          <h2 id="matches-title">Match list</h2>
+        </div>
+        <div class="match-grid" data-match-list></div>
+      </section>
+
+      <section class="section section-muted" id="teams" aria-labelledby="teams-title">
+        <div class="section-heading">
+          <p class="eyebrow">Teams</p>
+          <h2 id="teams-title">Team list</h2>
+        </div>
+        <div class="team-grid" data-team-list></div>
+      </section>
+
+      <section class="section" id="status" aria-labelledby="status-title">
+        <div class="section-heading">
+          <p class="eyebrow">Workflow</p>
+          <h2 id="status-title">Coverage status</h2>
+        </div>
+        <div class="status-board" data-status-board></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Static MVP shell. External sources remain links and metadata only.</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
