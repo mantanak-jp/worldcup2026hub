@@ -94,3 +94,9 @@ Generated reviews are original Japanese synthesis based on multiple sources and 
 `data/article_extractions.json` stores short original Japanese extraction notes, topic tags, tactical phases, linked claim IDs, confidence, and missing inputs. These notes are the bridge from source metadata to `tactical_claims`; they are not copied article bodies.
 
 Unapproved sources must remain metadata-only or manual-review-needed until source policy review is complete.
+
+## Crawl Run Handling
+
+`data/crawl_runs.json` records planned, dry-run, scheduled, and match-window crawler runs. Early records may be samples with zero discovered/stored/extracted counts so the UI and workflow can validate shape before real crawling is approved.
+
+Crawl run records should include policy-blocked counts and notes so disabled or unapproved sources remain visible without being used.
