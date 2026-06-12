@@ -53,3 +53,4 @@ The current site shell is plain HTML, CSS, JavaScript, and JSON so it can run di
 - `app.js`: client-side JSON loading and rendering for the MVP shell.
 - `match.html` / `team.html`: detail page shells driven by URL `id` parameters.
 - `data/*.json`: static data records for matches, teams, reports, reviews, sources, and update history.
+- Automation scaffold JSON files define future source registry and generated review records without enabling crawler targets.

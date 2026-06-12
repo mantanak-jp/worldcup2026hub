@@ -1,0 +1,23 @@
+[
+  {
+    "id": "generation-run-match-001-sample",
+    "match_id": "match-001",
+    "status": "auto_draft",
+    "trigger": "local_sample",
+    "input_source_ids": ["source-fifa-match-centre"],
+    "input_article_ids": [],
+    "generator_name": "local-deterministic-sample",
+    "prompt_version": "level3-source-based-v0",
+    "generation_version": "2026.0.1-sample",
+    "source_coverage": {
+      "source_count": 1,
+      "article_count": 0,
+      "languages": ["en"],
+      "coverage_level": "insufficient_sources"
+    },
+    "confidence": 0.28,
+    "started_at": "2026-06-12T00:00:00+09:00",
+    "completed_at": "2026-06-12T00:00:00+09:00",
+    "notes": "Sample local-only generation run. No external API or crawler was used."
+  }
+]

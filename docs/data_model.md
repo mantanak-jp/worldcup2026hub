@@ -17,6 +17,30 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 - `data/review_generation_runs.json`: generation run metadata, model/prompt version, inputs, status, and confidence.
 - `data/generated_match_reviews.json`: original Japanese generated match reviews linked to source, article, and generation-run IDs.
 
+## Automation Scaffold Files
+
+The automation scaffold defines future data shapes. It is not crawler implementation and does not enable any source target.
+
+### `data/source_registry.json`
+
+Defines candidate and approved source records. Key fields include `id`, `name`, `base_url`, `languages`, `source_category`, `crawl_method`, `robots_policy_status`, `terms_policy_status`, `allowed_use`, `content_storage_policy`, `full_text_storage_allowed`, `paid_api_required`, `api_cost_policy`, `enabled`, and `priority`.
+
+`enabled=true` is a boundary change and requires user confirmation. Wave 1 sample records must remain `enabled=false`.
+
+Paid APIs are not used. Sources requiring API keys, secrets, billing accounts, or metered paid APIs must remain disabled until explicitly approved.
+
+External content storage is controlled by source policy. The default is metadata, URL, extraction notes, and generated review text. Full text storage is only a future possibility when source policy explicitly allows it and the user approves that source policy.
+
+### `data/review_generation_runs.json`
+
+Tracks local or automated generation runs. Key fields include `id`, `match_id`, `status`, `trigger`, `input_source_ids`, `input_article_ids`, `generator_name`, `prompt_version`, `generation_version`, `source_coverage`, `confidence`, `started_at`, `completed_at`, and `notes`.
+
+### `data/generated_match_reviews.json`
+
+Stores generated Japanese match reviews. Key fields include `id`, `match_id`, `generation_run_id`, `status`, review sections, `source_coverage`, `confidence`, `generated_at`, `generation_version`, `source_ids`, `article_ids`, and `notes`.
+
+Generated reviews must not include copied article bodies, long quotations, or external images.
+
 ## Principles
 
 - Keep external content as metadata and links.
