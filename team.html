@@ -12,7 +12,7 @@
       <span>Team detail</span>
     </header>
 
-    <main class="detail-shell">
+    <main class="detail-shell" data-detail-shell>
       <section class="detail-hero">
         <p class="eyebrow" data-team-group>Group A</p>
         <h1 data-team-name>Canada</h1>
@@ -21,21 +21,27 @@
 
       <section class="panel-grid" aria-label="Team detail sections">
         <article class="panel">
-          <p class="eyebrow">Matches</p>
-          <h2>Linked matches</h2>
-          <ul class="source-list" data-team-matches></ul>
+          <p class="eyebrow">Team status</p>
+          <h2 data-team-status>Qualified</h2>
+          <p data-team-profile-status>Profile draft</p>
         </article>
 
         <article class="panel">
-          <p class="eyebrow">Review notes</p>
-          <h2>Team watchlist</h2>
-          <p>Space for tactical themes, players to monitor, and post-match updates.</p>
+          <p class="eyebrow">Matches</p>
+          <h2>Linked matches</h2>
+          <ul class="source-list" data-team-matches></ul>
         </article>
 
         <article class="panel panel-wide">
           <p class="eyebrow">Reference sources</p>
           <h2>Sources</h2>
           <ul class="source-list" data-source-list></ul>
+        </article>
+
+        <article class="panel panel-wide">
+          <p class="eyebrow">Updates</p>
+          <h2>Update history</h2>
+          <ul class="source-list" data-update-history></ul>
         </article>
       </section>
     </main>

@@ -29,8 +29,10 @@ This repository currently contains the initial documentation scaffold. Add appli
 
 ## Static MVP
 
-The initial site shell is plain HTML, CSS, and JavaScript so it can run directly on GitHub Pages without a build step.
+The initial site shell is plain HTML, CSS, JavaScript, and JSON so it can run directly on GitHub Pages without a build step.
 
 - `index.html`: top page, match list, team list, and coverage status sections.
 - `styles.css`: responsive layout and visual styling.
-- `app.js`: sample client-side data rendering for the MVP shell.
+- `app.js`: client-side JSON loading and rendering for the MVP shell.
+- `match.html` / `team.html`: detail page shells driven by URL `id` parameters.
+- `data/*.json`: static data records for matches, teams, reports, reviews, sources, and update history.

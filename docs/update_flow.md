@@ -42,5 +42,7 @@ Recommended fields:
 - `review_needed`
 - `published`
 - `blocked`
+- `manual-review-needed`
+- `approved-reference`
 
 Use explicit statuses so unfinished work is visible in the static UI.
