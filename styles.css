@@ -144,16 +144,18 @@ a {
   border-radius: 8px;
   box-shadow: var(--shadow);
   min-width: 0;
-  padding: 18px;
+  padding: 20px;
 }
 
 .card h3 {
-  font-size: 1rem;
-  margin: 0 0 10px;
+  font-size: 1.06rem;
+  line-height: 1.25;
+  margin: 0 0 12px;
 }
 
 .card-link {
   display: block;
+  min-height: 150px;
   text-decoration: none;
   transition: transform 160ms ease, border-color 160ms ease;
 }
@@ -167,6 +169,7 @@ a {
 .meta {
   color: var(--muted);
   font-size: 0.88rem;
+  line-height: 1.45;
   margin: 0;
 }
 
@@ -199,6 +202,7 @@ a {
   display: inline-flex;
   font-size: 0.78rem;
   font-weight: 700;
+  line-height: 1.15;
   padding: 5px 9px;
 }
 
@@ -230,15 +234,27 @@ a {
     flex-direction: column;
   }
 
+  .section {
+    padding: 38px 16px;
+  }
+
   .hero {
     min-height: 340px;
     padding-bottom: 74px;
     padding-top: 48px;
   }
 
+  .hero h1 {
+    font-size: 2.45rem;
+  }
+
   .match-grid,
   .team-grid,
   .status-board {
     grid-template-columns: 1fr;
+  }
+
+  .card-link {
+    min-height: 0;
   }
 }
