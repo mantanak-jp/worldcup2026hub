@@ -1,0 +1,53 @@
+[
+  {
+    "id": "article-match-001-official-sample",
+    "source_id": "source-fifa-match-centre",
+    "url": "https://www.fifa.com/",
+    "title": "Opening match official metadata sample",
+    "language": "en",
+    "source_category": ["official", "match_report"],
+    "related_match_ids": ["match-001"],
+    "related_team_ids": ["team-canada", "team-placeholder-a2"],
+    "published_at": "2026-06-11T23:30:00Z",
+    "discovered_at": "2026-06-12T00:00:00Z",
+    "checked_at": "2026-06-12T00:00:00Z",
+    "extraction_status": "sample_metadata_only",
+    "content_storage_policy": "metadata-only",
+    "full_text_stored": false,
+    "notes": "Metadata-only sample. Source is not approved for automated crawling or full-text storage."
+  },
+  {
+    "id": "article-match-001-tactical-sample",
+    "source_id": "candidate-tactical-analysis-ja",
+    "url": "https://example.com/tactical-ja/match-001",
+    "title": "Tactical analysis candidate metadata sample",
+    "language": "ja",
+    "source_category": ["tactical_analysis"],
+    "related_match_ids": ["match-001"],
+    "related_team_ids": ["team-canada"],
+    "published_at": null,
+    "discovered_at": "2026-06-12T00:00:00Z",
+    "checked_at": "2026-06-12T00:00:00Z",
+    "extraction_status": "sample_unapproved_source",
+    "content_storage_policy": "manual-review-needed",
+    "full_text_stored": false,
+    "notes": "Candidate-only sample. No article body, long quote, image, or crawler output is stored."
+  },
+  {
+    "id": "article-match-001-stats-sample",
+    "source_id": "candidate-statistics-source",
+    "url": "https://example.com/statistics/match-001",
+    "title": "Statistics candidate metadata sample",
+    "language": "en",
+    "source_category": ["statistics"],
+    "related_match_ids": ["match-001"],
+    "related_team_ids": [],
+    "published_at": null,
+    "discovered_at": "2026-06-12T00:00:00Z",
+    "checked_at": "2026-06-12T00:00:00Z",
+    "extraction_status": "sample_unapproved_source",
+    "content_storage_policy": "manual-review-needed",
+    "full_text_stored": false,
+    "notes": "Candidate statistics metadata sample. Not a real crawl result."
+  }
+]

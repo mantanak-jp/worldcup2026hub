@@ -1,0 +1,50 @@
+[
+  {
+    "id": "extraction-match-001-official-sample",
+    "article_id": "article-match-001-official-sample",
+    "match_id": "match-001",
+    "team_ids": ["team-canada", "team-placeholder-a2"],
+    "language": "en",
+    "extraction_method": "manual_sample_metadata_only",
+    "extracted_topics": ["match_context", "official_status"],
+    "tactical_phases": ["unknown"],
+    "short_notes_ja": "公式情報のメタデータ確認用サンプル。本文コピーや長文引用は含めない。",
+    "linked_claim_ids": [],
+    "confidence": 0.25,
+    "missing_inputs": ["approved source policy", "post-match article metadata", "event data"],
+    "created_at": "2026-06-12T00:00:00Z",
+    "notes": "Extraction scaffold only. No external article body is stored."
+  },
+  {
+    "id": "extraction-match-001-pressing-sample",
+    "article_id": "article-match-001-tactical-sample",
+    "match_id": "match-001",
+    "team_ids": ["team-canada"],
+    "language": "ja",
+    "extraction_method": "manual_sample_short_note",
+    "extracted_topics": ["pressing", "mid_block"],
+    "tactical_phases": ["out_of_possession"],
+    "short_notes_ja": "守備局面の論点を短い独自メモとして保持するサンプル。",
+    "linked_claim_ids": ["claim-match-001-pressing-sample"],
+    "confidence": 0.35,
+    "missing_inputs": ["independent second source", "approved source policy"],
+    "created_at": "2026-06-12T00:00:00Z",
+    "notes": "Short original extraction note. No copied article body or long quote."
+  },
+  {
+    "id": "extraction-match-001-transition-sample",
+    "article_id": "article-match-001-stats-sample",
+    "match_id": "match-001",
+    "team_ids": ["team-canada"],
+    "language": "en",
+    "extraction_method": "manual_sample_short_note",
+    "extracted_topics": ["transition_attack", "counter_attack"],
+    "tactical_phases": ["transition_attack"],
+    "short_notes_ja": "攻撃移行の論点をclaim連携できる形で保持するサンプル。",
+    "linked_claim_ids": ["claim-match-001-transition-sample"],
+    "confidence": 0.3,
+    "missing_inputs": ["approved statistics source", "article-level event evidence"],
+    "created_at": "2026-06-12T00:00:00Z",
+    "notes": "Metadata-to-claim bridge sample. No full text storage."
+  }
+]
