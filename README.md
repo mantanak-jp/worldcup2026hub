@@ -11,6 +11,7 @@ Automatic collection, automatic generation, and automatic publishing are the tar
 - Generate original Japanese match reviews from multiple source categories.
 - Track source coverage, confidence, generation version, and update history.
 - Keep code changes PR-based while allowing approved tournament data updates, generated reviews, site artifacts, and Pages output to be automated during operation.
+- Keep the current implementation path free of paid external APIs, secrets, and billing-account dependencies; source content storage is governed by explicit source policy.
 
 ## Repository Structure
 
