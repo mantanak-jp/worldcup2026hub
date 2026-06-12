@@ -50,6 +50,33 @@ Feature work should normally be done in worktrees.
 * Do not force push unless the user explicitly approves.
 * Do not delete branches, tags, or worktrees unless the user explicitly approves.
 
+## Low-Interaction Execution Policy
+
+Codex should not pause for user confirmation during routine feature-branch work as long as the task stays within the repository guardrails and does not cross a user-confirmation boundary.
+
+For normal feature-branch work, Codex may proceed without additional user confirmation for:
+
+* Creating worktrees.
+* Creating feature branches.
+* Creating and editing files.
+* Updating docs and README files.
+* Updating JSON sample data.
+* Adding local-only scripts and validation tools.
+* Running local checks.
+* Reviewing `git diff`, `git diff --stat`, and `git diff --name-only`.
+* `git add`.
+* `git commit`.
+* Pushing to feature branches.
+* Creating pull requests.
+* Updating existing pull requests with additional commits.
+* Merging the latest `main` into feature branches for conflict resolution.
+* Resolving merge conflicts on feature branches.
+* Committing and pushing conflict-resolution changes on feature branches.
+
+Codex should inspect routine conflict resolutions, preserve both relevant sides when appropriate, run checks, commit, push, and report the result without waiting for user approval.
+
+User confirmation should be reserved for boundary changes such as `main` merge, direct commits to `main`, force push, branch / tag / worktree deletion, GitHub Pages settings or deploy changes, enabling source targets, real crawling, external API or paid API usage, secrets, DB / auth, package or build-tool introduction, large stack changes, and source policies that allow full external article text or external image storage.
+
 ## Automation Operating Model
 
 GitHub Actions scheduled workflows, approved-source crawlers, review generators, generated data updates, site artifact generation, and GitHub Pages deployment are core features of the completed platform.
@@ -75,6 +102,8 @@ Human review is not required for every generated review. `auto_published` review
 * Commit.
 * Push.
 * Pull request creation.
+* Pull request updates.
+* Routine feature-branch conflict resolution.
 * Source registry schema work.
 * Crawler pipeline design work.
 * Review generation design work.
@@ -94,11 +123,13 @@ After these paths are approved and merged, routine scheduled runs do not require
 ## User Confirmation Required For Boundary Changes
 
 * Merging into `main`.
+* Direct commits to `main`.
 * Adding a new crawler target.
 * Enabling a source target.
 * Using sources with unresolved robots / ToS / allowed-use status.
 * Initial GitHub Pages publication settings.
 * Changing the GitHub Pages publication method.
+* Pages deploy changes.
 * Large workflow, generator, or publishing-path changes.
 * External API usage.
 * Paid services.
@@ -106,6 +137,7 @@ After these paths are approved and merged, routine scheduled runs do not require
 * Database introduction.
 * Login / authentication.
 * Admin UI.
+* Package manager, build tool, Astro, or larger stack introduction.
 * Any source policy that would allow storing full external article bodies.
 * Any source policy that would allow storing external images.
 * Any implementation with unresolved copyright, terms-of-service, scraping, or redistribution risk.
@@ -197,12 +229,14 @@ Next recommended step:
 ## Prohibited Without Explicit User Approval
 
 * Merge to `main`.
+* Direct commit to `main`.
 * Force push.
 * Delete branches.
 * Delete worktrees.
 * Delete tags.
 * Enable initial GitHub Pages settings.
 * Change GitHub Pages publication method.
+* Run or change Pages deploy.
 * Add new crawler targets.
 * Enable any source target without user approval.
 * Use sources whose robots / ToS / allowed-use review is incomplete.
@@ -211,5 +245,6 @@ Next recommended step:
 * Add paid services.
 * Add paid external APIs, metered billing APIs, API keys, secrets, or billing accounts.
 * Add DB / authentication.
+* Introduce package.json, build tools, Astro, or a larger stack without explicit approval.
 * Store copied article text or external images without explicit source-policy approval.
 * Large-scale rewrite or repository restructuring.
