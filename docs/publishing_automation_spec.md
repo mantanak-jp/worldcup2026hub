@@ -49,6 +49,8 @@ This dry-run stage may use `workflow_dispatch` and a scheduled trigger, but it m
 
 Its purpose is to prove that repository data, local scripts, and generated-review schemas remain valid before an approved production publishing path is introduced.
 
+The dry-run workflow may also execute local-only extraction validation scripts when present, such as `tools/normalize_article_extractions.js`. These scripts must remain repository-local and must not call external APIs, access secrets, run crawlers, commit back, or deploy Pages output.
+
 ## Review Status Display
 
 The UI should display states such as:
