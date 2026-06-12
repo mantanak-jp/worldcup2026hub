@@ -60,4 +60,5 @@ The current site shell is plain HTML, CSS, JavaScript, and JSON so it can run di
 - `data/articles.json` / `data/article_extractions.json`: metadata-only article input scaffold and short original extraction notes.
 - `data/crawl_runs.json`: planned and dry-run crawler run history scaffold; no real crawling is enabled.
 - `tools/generate_match_review_sample.js`: local-only deterministic review generation dry-run with no external API or network access.
+- `tools/normalize_article_extractions.js`: local-only extraction reference validator with graceful fallback when article scaffold files are absent.
 - Automation scaffold JSON files define future source registry and generated review records without enabling crawler targets.
