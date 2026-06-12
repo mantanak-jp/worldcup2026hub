@@ -6,6 +6,10 @@ The finished system is intended to collect approved multilingual sources, organi
 
 Automatic collection, automatic generation, and automatic publishing are the target operating model.
 
+Public v0.1 is a preview of that model using sample and dry-run data only.
+
+Published URL: TODO after the user approves initial GitHub Pages settings.
+
 ## Goals
 
 - Generate original Japanese match reviews from multiple source categories.
@@ -32,6 +36,8 @@ Automatic collection, automatic generation, and automatic publishing are the tar
 ## Getting Started
 
 This repository currently contains a plain static MVP and planning documents for the automated review platform. Crawler implementation, scheduled workflows, and Pages deployment automation are intentionally staged for later PRs.
+
+The current public-readiness target is honest preview content: source targets remain disabled, real crawling has not started, paid APIs are not used, and generated reviews are sample outputs with visible confidence and source coverage.
 
 ## Documentation
 
