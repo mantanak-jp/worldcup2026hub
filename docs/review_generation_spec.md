@@ -76,6 +76,14 @@ Generated reviews must not include copied article bodies, long quotations, or ex
 
 They may cite source metadata and link to original sources. They should synthesize across sources in original Japanese prose.
 
+## Local Dry-Run Generator
+
+`tools/generate_match_review_sample.js` is a deterministic local-only sample generator.
+
+It reads local JSON files, writes a sample generated review to stdout, and does not call external APIs, access the network, use secrets, add paid services, or persist external article bodies or images.
+
+The script is intended for schema validation and workflow dry-runs before any approved production generator is introduced.
+
 Review generation in the current path must not use paid external APIs, metered billing APIs, API keys, secrets, or billing accounts.
 
 Full external article text may be used as an input only in a future implementation where the source policy explicitly allows that use and the user has approved the source policy. Unreviewed sources default to metadata, URL, extraction notes, and generated review output only.
