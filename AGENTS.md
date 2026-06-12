@@ -2,27 +2,28 @@
 
 ## Project
 
-WorldCup2026Hub is a personal information hub for the 2026 FIFA World Cup.
+WorldCup2026Hub is an automated multilingual match review generation platform for the 2026 FIFA World Cup.
 
-The goal is to build a GitHub Pages site that organizes match information, team information, result reports, tactical reviews, and references to external sources.
+The core product is not a manual link collection. The finished system should regularly collect official information, statistics, tactical analysis, match reports, manager comments, player comments, previews, and long-form reviews from approved multilingual sources, organize them by match and team, generate original Japanese match reviews, and publish updated site content automatically.
 
-This is not intended to be a public media site. It is primarily a personal research and viewing hub.
+GitHub Pages is the display surface. The main system is the collection, normalization, review-generation, and publishing pipeline behind it.
 
 ## Development Roles
 
 * User:
 
   * Gives instructions from iPhone.
-  * Makes final decisions on merge, public settings, external APIs, crawling targets, and paid services.
+  * Makes final decisions on merge, new crawler targets, robots / ToS risk, paid services, DB / auth introduction, and any storage of external article bodies or images.
 * Codex:
 
-  * Handles local repository work, worktree management, implementation, tests/checks, commits, pushes, and PR creation when appropriate.
+  * Handles local repository work, worktree management, implementation, checks, commits, pushes, and PR creation when appropriate.
+  * May implement approved automation architecture within the repository rules.
 * ChatGPT:
 
   * Helps with planning, requirements, review, task prompts, and development guardrails.
 * GitHub:
 
-  * Source of truth for repository state.
+  * Source of truth for repository state, scheduled automation, generated artifacts, and Pages deployment state.
 
 ## Local Repository Layout
 
@@ -32,13 +33,6 @@ Normal repository:
 C:\Users\manta\dev\WorldCup2026Hub
 ```
 
-Current worktree:
-
-```text
-C:\Users\manta\dev\worldcup2026hub-static-site-mvp
-```
-
-Main repository is used as the source-of-truth checkout.
 Feature work should normally be done in worktrees.
 
 ## Git and Worktree Policy
@@ -54,6 +48,18 @@ Feature work should normally be done in worktrees.
 * Do not force push unless the user explicitly approves.
 * Do not delete branches, tags, or worktrees unless the user explicitly approves.
 
+## Automation Operating Model
+
+GitHub Actions scheduled workflows, approved-source crawlers, review generators, generated data updates, site artifact generation, and GitHub Pages deployment are core features of the completed platform.
+
+Code changes remain PR-based.
+
+Routine tournament-operation updates may be automated after the relevant source registry, workflow, generator, and publishing path are approved and merged.
+
+Once a source, workflow, generator, and publishing path are approved and merged, routine tournament-operation runs may update generated reviews, data files, site artifacts, and Pages output automatically without per-review user confirmation.
+
+Human review is not required for every generated review. `auto_published` reviews are allowed when source coverage, confidence, generation version, and status are visible in the UI.
+
 ## Codex May Proceed Without Additional Confirmation For
 
 * HTML / CSS / JavaScript implementation.
@@ -67,21 +73,39 @@ Feature work should normally be done in worktrees.
 * Commit.
 * Push.
 * Pull request creation.
+* Source registry schema work.
+* Crawler pipeline design work.
+* Review generation design work.
+* Static data model changes that do not enable new external targets.
 
-## User Confirmation Required For
+## Codex May Implement After The Feature Is Requested
+
+* GitHub Actions scheduled workflows for approved source crawling.
+* Approved-source crawler implementation based on `source_registry`.
+* Review generator implementation.
+* Static export or site artifact generation.
+* GitHub Pages deploy workflow.
+* Automated updates to data, generated reviews, and site artifacts.
+
+After these paths are approved and merged, routine scheduled runs do not require per-review confirmation.
+
+## User Confirmation Required For Boundary Changes
 
 * Merging into `main`.
-* GitHub Pages publication settings.
-* GitHub Actions scheduled execution.
+* Adding a new crawler target.
+* Enabling a source target.
+* Using sources with unresolved robots / ToS / allowed-use status.
+* Initial GitHub Pages publication settings.
+* Changing the GitHub Pages publication method.
+* Large workflow, generator, or publishing-path changes.
 * External API usage.
 * Paid services.
 * Database introduction.
 * Login / authentication.
 * Admin UI.
-* Adding crawling targets.
 * Storing external article bodies.
 * Storing external images.
-* Any implementation with copyright, terms-of-service, or scraping risk.
+* Any implementation with unresolved copyright, terms-of-service, scraping, or redistribution risk.
 * Large technology stack changes.
 * Large file deletion or repository restructuring.
 * Force push.
@@ -91,34 +115,41 @@ Feature work should normally be done in worktrees.
 
 * Do not reproduce external article bodies.
 * Do not store or redistribute external article images.
-* Store external sources as metadata, URL, source name, language, article type, related match/team, checked status, and Japanese summary notes.
-* Keep Japanese notes concise and original.
+* Do not persist full external article text.
+* Store source metadata, URL, language, source type, related match/team, checked status, extraction notes, and concise original Japanese notes.
+* Generated Japanese reviews must be original synthesis, not translation, copied summary, or long quotation.
 * Treat external sources as references, not copied content.
 * Respect robots.txt, site terms, copyright, and fair use / quotation limits.
-* Crawling implementation must not be added without explicit user confirmation.
+* Scheduled crawling of approved sources in the source registry is allowed.
+* New crawler targets require user confirmation before being enabled.
+* Approved source registry entries may be crawled on schedule without per-run confirmation.
 
-## Initial Technical Direction
+## Technical Direction
 
-* Start with a static GitHub Pages-compatible site.
-* Use plain HTML / CSS / JavaScript at first unless otherwise instructed.
-* Use JSON files for initial sample data.
-* Do not introduce Astro, package.json, build tools, GitHub Actions, database, or login until explicitly requested.
+* Keep the initial site GitHub Pages-compatible.
+* Use plain HTML / CSS / JavaScript / JSON until a larger stack change is explicitly approved.
+* Do not introduce package.json, Astro, build tools, database, or login until explicitly requested.
 * Design should remain easy to migrate to Astro / MDX later.
+* The final system should support scheduled collection, extraction, review generation, generated review versioning, confidence display, source coverage display, and automated publishing.
 
 ## Current MVP Direction
 
-Build a minimal static site with:
+Build toward an automated match review platform with:
 
 * Top page.
 * Match list.
 * Team list.
-* Match cards.
+* Match detail pages.
+* Team detail pages.
+* Source registry.
+* Crawl run history.
+* Article metadata.
+* Article extraction metadata.
+* Generated match reviews.
+* Review generation runs.
 * Result report status.
 * Tactical review status.
-* Reference source display area in later phases.
-* JSON-based data structure.
-
-Automatic crawling is a later phase.
+* Source coverage and confidence display.
 
 ## Required Pre-Work Checks
 
@@ -142,7 +173,7 @@ git diff --stat
 git diff --name-only
 ```
 
-If relevant, also perform a simple local display or syntax check.
+If relevant, also perform a simple local display, syntax, or Markdown consistency check.
 
 ## Completion Report Format
 
@@ -167,11 +198,14 @@ Next recommended step:
 * Delete branches.
 * Delete worktrees.
 * Delete tags.
-* Enable or change GitHub Pages settings.
-* Add scheduled GitHub Actions.
+* Enable initial GitHub Pages settings.
+* Change GitHub Pages publication method.
+* Add new crawler targets.
+* Enable any source target without user approval.
+* Use sources whose robots / ToS / allowed-use review is incomplete.
+* Make large workflow, generator, or publishing-path changes.
 * Add external APIs.
 * Add paid services.
 * Add DB / authentication.
-* Add crawler targets.
 * Store copied article text or external images.
 * Large-scale rewrite or repository restructuring.
