@@ -11,6 +11,26 @@ function byId(items) {
   return new Map(items.map((item) => [item.id, item]));
 }
 
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function safeUrl(value) {
+  try {
+    const url = new URL(value, window.location.href);
+    return url.protocol === "http:" || url.protocol === "https:" ? url.href : "#";
+  } catch (error) {
+    console.error(error);
+    return "#";
+  }
+}
+
 function getIdFromUrl() {
   return new URLSearchParams(window.location.search).get("id");
 }
@@ -36,10 +56,10 @@ function scoreText(score) {
 
 function listItems(items, emptyText = "None yet") {
   if (!items || items.length === 0) {
-    return `<li>${emptyText}</li>`;
+    return `<li>${escapeHtml(emptyText)}</li>`;
   }
 
-  return items.map((item) => `<li>${item}</li>`).join("");
+  return items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
 }
 
 async function loadData() {
@@ -66,7 +86,7 @@ function renderError(error) {
 
 function renderFallback(message) {
   const shell = document.querySelector("[data-detail-shell]");
-  shell.innerHTML = `<section class="panel"><h1>${message}</h1><p>Return to the top page and choose another card.</p></section>`;
+  shell.innerHTML = `<section class="panel"><h1>${escapeHtml(message)}</h1><p>Return to the top page and choose another card.</p></section>`;
 }
 
 function sourceList(sourceIds, sources) {
@@ -79,9 +99,9 @@ function sourceList(sourceIds, sources) {
 
   return items.map((source) => `
     <li>
-      <a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.name}</a>
-      <p>${source.source_type} / ${source.language} / ${source.checked_status}</p>
-      <p>${source.japanese_note || "No note yet"}</p>
+      <a href="${escapeHtml(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)}</a>
+      <p>${escapeHtml(source.source_type)} / ${escapeHtml(source.language)} / ${escapeHtml(source.checked_status)}</p>
+      <p>${escapeHtml(source.japanese_note || "No note yet")}</p>
     </li>
   `).join("");
 }
@@ -93,9 +113,9 @@ function updateHistoryList(records) {
 
   return records.map((record) => `
     <li>
-      <strong>${record.status}</strong>
-      <p>${record.summary}</p>
-      <p>${record.updated_at || "Updated time TBD"} / ${record.updated_by || "unknown"}</p>
+      <strong>${escapeHtml(record.status)}</strong>
+      <p>${escapeHtml(record.summary)}</p>
+      <p>${escapeHtml(record.updated_at || "Updated time TBD")} / ${escapeHtml(record.updated_by || "unknown")}</p>
     </li>
   `).join("");
 }
@@ -166,7 +186,7 @@ function renderTeam(data, id) {
     ? relatedMatches.map((match) => {
       const home = teams.get(match.home_team_id)?.name || match.home_team_id;
       const away = teams.get(match.away_team_id)?.name || match.away_team_id;
-      return `<li><a href="match.html?id=${encodeURIComponent(match.id)}">${home} vs ${away}</a><p>${formatDate(match.kickoff)} / ${match.status}</p></li>`;
+      return `<li><a href="match.html?id=${encodeURIComponent(match.id)}">${escapeHtml(home)} vs ${escapeHtml(away)}</a><p>${escapeHtml(formatDate(match.kickoff))} / ${escapeHtml(match.status)}</p></li>`;
     }).join("")
     : "<li>No related matches yet</li>";
   document.querySelector("[data-source-list]").innerHTML = sourceList(team.source_ids, data.sources);

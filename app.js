@@ -22,6 +22,16 @@ function byId(items) {
   return new Map(items.map((item) => [item.id, item]));
 }
 
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
 function scoreText(score) {
   if (!score || score.home === null || score.away === null) {
     return "Score TBD";
@@ -71,13 +81,13 @@ function renderMatches(data) {
 
     return `
       <a class="card card-link" href="match.html?id=${encodeURIComponent(match.id)}">
-        <p class="eyebrow">${match.group || match.stage}</p>
-        <h3>${home} vs ${away}</h3>
-        <p class="meta">${formatDate(match.kickoff)} / ${match.venue_id}</p>
-        <p class="meta">${match.status} / ${scoreText(match.score)}</p>
+        <p class="eyebrow">${escapeHtml(match.group || match.stage)}</p>
+        <h3>${escapeHtml(home)} vs ${escapeHtml(away)}</h3>
+        <p class="meta">${escapeHtml(formatDate(match.kickoff))} / ${escapeHtml(match.venue_id)}</p>
+        <p class="meta">${escapeHtml(match.status)} / ${escapeHtml(scoreText(match.score))}</p>
         <div class="pill-row">
-          <span class="pill warning">Result: ${report?.status || "not_started"}</span>
-          <span class="pill review">Review: ${review?.status || "not_started"}</span>
+          <span class="pill warning">Result: ${escapeHtml(report?.status || "not_started")}</span>
+          <span class="pill review">Review: ${escapeHtml(review?.status || "not_started")}</span>
         </div>
       </a>
     `;
@@ -94,13 +104,13 @@ function renderTeams(data) {
 
     return `
       <a class="card card-link" href="team.html?id=${encodeURIComponent(team.id)}">
-        <p class="eyebrow">Group ${team.group}</p>
-        <h3>${team.name}</h3>
-        <p class="meta">${team.short_name} / ${team.confederation}</p>
+        <p class="eyebrow">Group ${escapeHtml(team.group)}</p>
+        <h3>${escapeHtml(team.name)}</h3>
+        <p class="meta">${escapeHtml(team.short_name)} / ${escapeHtml(team.confederation)}</p>
         <div class="pill-row">
-          <span class="pill">${team.status}</span>
-          <span class="pill warning">${team.profile_status}</span>
-          <span class="pill review">${relatedMatches.length} matches</span>
+          <span class="pill">${escapeHtml(team.status)}</span>
+          <span class="pill warning">${escapeHtml(team.profile_status)}</span>
+          <span class="pill review">${escapeHtml(relatedMatches.length)} matches</span>
         </div>
       </a>
     `;
@@ -125,8 +135,8 @@ function renderStatus(data) {
 
   target.innerHTML = statusItems.map((item) => `
     <article class="card">
-      <h3>${item.label}</h3>
-      <p class="meta">${item.value}</p>
+      <h3>${escapeHtml(item.label)}</h3>
+      <p class="meta">${escapeHtml(item.value)}</p>
     </article>
   `).join("");
 }
