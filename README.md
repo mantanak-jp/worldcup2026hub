@@ -56,4 +56,5 @@ The current site shell is plain HTML, CSS, JavaScript, and JSON so it can run di
 - `match.html` / `team.html`: detail page shells driven by URL `id` parameters.
 - `data/*.json`: static data records for matches, teams, reports, reviews, sources, and update history.
 - `tools/generate_match_review_sample.js`: local-only deterministic review generation dry-run with no external API or network access.
+- `tools/normalize_article_extractions.js`: local-only extraction reference validator with graceful fallback when article scaffold files are absent.
 - Automation scaffold JSON files define future source registry and generated review records without enabling crawler targets.
