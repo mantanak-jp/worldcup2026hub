@@ -23,6 +23,8 @@ article_extractions
   -> generated_match_reviews
 ```
 
+Article extractions are optional in local dry-runs until the scaffold lands, but when present they should improve article counts, language coverage, missing-input reporting, and claim linkage validation.
+
 ## Review Requirements
 
 - Claims must link to supporting source IDs and article IDs when available.
