@@ -76,6 +76,10 @@ p {
   margin: 0;
 }
 
+a {
+  color: var(--accent);
+}
+
 .panel-grid {
   display: grid;
   gap: 16px;
@@ -103,7 +107,16 @@ p {
   padding: 0;
 }
 
-.source-list li {
+.detail-list {
+  color: var(--muted);
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.source-list li,
+.detail-list li {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 12px;
@@ -112,6 +125,11 @@ p {
 .source-list a {
   color: var(--accent);
   font-weight: 700;
+}
+
+.source-list p,
+.detail-list p {
+  margin-top: 4px;
 }
 
 @media (max-width: 760px) {

@@ -26,8 +26,11 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 - `final`: match result is final.
 - `not_started`: report or review has not started.
 - `draft`: record exists but needs review.
+- `review_needed`: record needs manual review before publication.
 - `published`: record is ready for display.
+- `blocked`: record should not be published or used yet.
 - `manual-review-needed`: source metadata needs human confirmation.
+- `approved-reference`: source metadata is approved for link and metadata display.
 
 ## Source Handling
 
