@@ -1,0 +1,28 @@
+[
+  {
+    "id": "outline-match-001-sample",
+    "match_id": "match-001",
+    "status": "auto_draft",
+    "section_claims": {
+      "match_flow": ["claim-match-001-transition-sample"],
+      "initial_shapes": [],
+      "key_tactical_themes": ["claim-match-001-pressing-sample", "claim-match-001-transition-sample"],
+      "turning_points": [],
+      "key_players": [],
+      "substitutions_and_adjustments": [],
+      "source_consensus": ["claim-match-001-pressing-sample"],
+      "source_disagreement": [],
+      "next_match_implications": []
+    },
+    "source_coverage": {
+      "source_count": 1,
+      "article_count": 0,
+      "languages": ["en"],
+      "coverage_level": "insufficient_sources"
+    },
+    "confidence": 0.32,
+    "missing_inputs": ["multiple independent tactical sources", "article extractions", "post-match event data"],
+    "generated_at": "2026-06-12T00:00:00+09:00",
+    "generation_version": "level3-outline-v0"
+  }
+]
