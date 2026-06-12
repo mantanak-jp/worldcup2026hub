@@ -10,8 +10,10 @@ This PR does not implement the crawler. It defines the direction: source registr
 - Define robots / ToS / allowed-use status for every source.
 - Keep `enabled=false` until a source is reviewed.
 - Use approved sources for scheduled crawling during normal operation.
-- Store article metadata and extraction notes, not full external article bodies.
-- Never store downloaded external images.
+- Default to article metadata, URLs, extraction notes, and generated reviews.
+- Do not store full external article bodies unless the source policy explicitly allows it and the user has approved that source policy.
+- Do not store external images unless the source policy explicitly allows it and the user has approved that source policy.
+- Do not use paid external APIs, metered billing APIs, API keys, secrets, or billing accounts in the current implementation path.
 - Connect crawl output to generated match reviews.
 - Trigger review regeneration when source coverage improves.
 
@@ -36,13 +38,14 @@ User confirmation is required before:
 - Using a source with unresolved robots / ToS / allowed-use status.
 - Using external APIs.
 - Adding paid services.
-- Persisting anything beyond metadata, links, extraction notes, and original generated reviews.
+- Adding paid external APIs, metered billing APIs, API keys, secrets, or billing accounts.
+- Approving a source policy that permits full external article text or external image storage.
 
 After a source is approved and enabled, scheduled crawling of that source may run automatically without per-run confirmation.
 
 ## Storage Policy
 
-Allowed:
+Default allowed:
 
 - URL
 - source ID
@@ -55,9 +58,12 @@ Allowed:
 - concise original Japanese notes
 - generated Japanese review text
 
-Not allowed:
+Allowed only after explicit source-policy approval:
 
 - Full external article bodies
 - Downloaded external images
+
+Not allowed:
+
 - Long quotations
 - Paywalled text extraction unless explicitly approved

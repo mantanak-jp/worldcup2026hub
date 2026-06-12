@@ -13,7 +13,7 @@ GitHub Pages is the display surface. The main system is the collection, normaliz
 * User:
 
   * Gives instructions from iPhone.
-  * Makes final decisions on merge, new crawler targets, robots / ToS risk, paid services, DB / auth introduction, and any storage of external article bodies or images.
+  * Makes final decisions on merge, new crawler targets, robots / ToS risk, paid services, DB / auth introduction, and any policy that would allow external article bodies or images to be stored.
 * Codex:
 
   * Handles local repository work, worktree management, implementation, checks, commits, pushes, and PR creation when appropriate.
@@ -42,8 +42,10 @@ Feature work should normally be done in worktrees.
 * Prefer worktree + feature branch for implementation work.
 * Keep changes small and reviewable.
 * Codex may create branches and worktrees when needed.
+* Codex may use multiple independent worktrees in parallel when tasks are separable.
 * Codex may commit and push changes after checking the diff.
 * Codex may create pull requests when appropriate.
+* Codex should document PR dependencies and likely conflicts in PR bodies.
 * Do not merge pull requests unless the user explicitly approves.
 * Do not force push unless the user explicitly approves.
 * Do not delete branches, tags, or worktrees unless the user explicitly approves.
@@ -100,11 +102,12 @@ After these paths are approved and merged, routine scheduled runs do not require
 * Large workflow, generator, or publishing-path changes.
 * External API usage.
 * Paid services.
+* Paid external APIs, metered billing APIs, API keys, secrets, or billing accounts.
 * Database introduction.
 * Login / authentication.
 * Admin UI.
-* Storing external article bodies.
-* Storing external images.
+* Any source policy that would allow storing full external article bodies.
+* Any source policy that would allow storing external images.
 * Any implementation with unresolved copyright, terms-of-service, scraping, or redistribution risk.
 * Large technology stack changes.
 * Large file deletion or repository restructuring.
@@ -114,8 +117,8 @@ After these paths are approved and merged, routine scheduled runs do not require
 ## Copyright and Source Handling Guardrails
 
 * Do not reproduce external article bodies.
-* Do not store or redistribute external article images.
-* Do not persist full external article text.
+* Do not store or redistribute external article images unless the source policy explicitly allows it and the user has approved that source policy.
+* Do not persist full external article text unless the source policy explicitly allows it and the user has approved that source policy.
 * Store source metadata, URL, language, source type, related match/team, checked status, extraction notes, and concise original Japanese notes.
 * Generated Japanese reviews must be original synthesis, not translation, copied summary, or long quotation.
 * Treat external sources as references, not copied content.
@@ -206,6 +209,7 @@ Next recommended step:
 * Make large workflow, generator, or publishing-path changes.
 * Add external APIs.
 * Add paid services.
+* Add paid external APIs, metered billing APIs, API keys, secrets, or billing accounts.
 * Add DB / authentication.
-* Store copied article text or external images.
+* Store copied article text or external images without explicit source-policy approval.
 * Large-scale rewrite or repository restructuring.

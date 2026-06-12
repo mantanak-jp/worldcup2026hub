@@ -91,6 +91,7 @@ User confirmation is required for:
 - Using sources with unresolved robots / ToS / allowed-use status
 - External APIs
 - Paid services
+- Paid external APIs, metered billing APIs, API keys, secrets, or billing accounts
 - DB / auth
-- External article body or image storage
+- Source policy changes that allow external article body or image storage
 - Large workflow, generator, or publishing-path changes

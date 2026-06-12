@@ -1,0 +1,23 @@
+[
+  {
+    "id": "pressing",
+    "term_en": "pressing",
+    "term_ja": "プレッシング",
+    "description_ja": "相手の保持局面に対して、ボール保持者や周辺の選択肢に圧力をかける守備行動。",
+    "phrase_templates_ja": ["{team}は{phase}でプレッシングの強度を調整した。"]
+  },
+  {
+    "id": "counter_attack",
+    "term_en": "counter attack",
+    "term_ja": "カウンター",
+    "description_ja": "ボール奪取後に相手守備が整う前へ素早く前進する攻撃。",
+    "phrase_templates_ja": ["{team}は奪取後の前進で{topic}を狙った。"]
+  },
+  {
+    "id": "rest_defense",
+    "term_en": "rest defense",
+    "term_ja": "レストディフェンス",
+    "description_ja": "攻撃中にボールを失った直後へ備える後方の守備構造。",
+    "phrase_templates_ja": ["{team}のレストディフェンスは被カウンター管理の焦点になった。"]
+  }
+]
