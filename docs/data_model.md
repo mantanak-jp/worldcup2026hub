@@ -25,6 +25,7 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 - Keep status fields explicit so incomplete areas are visible in the UI.
 - Preserve a shape that can later move to Astro, MDX, or generated pages.
 - Make generated review quality visible through source coverage, confidence, generation version, and status.
+- Support automated tournament-operation updates after source registry, workflow, generator, and publishing paths are approved and merged.
 
 ## Common Status Values
 

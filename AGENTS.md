@@ -48,11 +48,15 @@ Feature work should normally be done in worktrees.
 * Do not force push unless the user explicitly approves.
 * Do not delete branches, tags, or worktrees unless the user explicitly approves.
 
-## Automation Policy
+## Automation Operating Model
 
 GitHub Actions scheduled workflows, approved-source crawlers, review generators, generated data updates, site artifact generation, and GitHub Pages deployment are core features of the completed platform.
 
-Code changes remain PR-based. During tournament operation, data updates, generated reviews, site artifacts, and Pages deploys may be automated and auto-published when they follow the approved source registry and repository policies.
+Code changes remain PR-based.
+
+Routine tournament-operation updates may be automated after the relevant source registry, workflow, generator, and publishing path are approved and merged.
+
+Once a source, workflow, generator, and publishing path are approved and merged, routine tournament-operation runs may update generated reviews, data files, site artifacts, and Pages output automatically without per-review user confirmation.
 
 Human review is not required for every generated review. `auto_published` reviews are allowed when source coverage, confidence, generation version, and status are visible in the UI.
 
@@ -83,12 +87,17 @@ Human review is not required for every generated review. `auto_published` review
 * GitHub Pages deploy workflow.
 * Automated updates to data, generated reviews, and site artifacts.
 
-## User Confirmation Required For
+After these paths are approved and merged, routine scheduled runs do not require per-review confirmation.
+
+## User Confirmation Required For Boundary Changes
 
 * Merging into `main`.
-* Enabling or changing GitHub Pages publication settings.
 * Adding a new crawler target.
-* Setting `enabled=true` for any source whose robots.txt, terms, and allowed use have not been reviewed.
+* Enabling a source target.
+* Using sources with unresolved robots / ToS / allowed-use status.
+* Initial GitHub Pages publication settings.
+* Changing the GitHub Pages publication method.
+* Large workflow, generator, or publishing-path changes.
 * External API usage.
 * Paid services.
 * Database introduction.
@@ -113,6 +122,7 @@ Human review is not required for every generated review. `auto_published` review
 * Respect robots.txt, site terms, copyright, and fair use / quotation limits.
 * Scheduled crawling of approved sources in the source registry is allowed.
 * New crawler targets require user confirmation before being enabled.
+* Approved source registry entries may be crawled on schedule without per-run confirmation.
 
 ## Technical Direction
 
@@ -188,9 +198,12 @@ Next recommended step:
 * Delete branches.
 * Delete worktrees.
 * Delete tags.
-* Enable or change GitHub Pages settings.
+* Enable initial GitHub Pages settings.
+* Change GitHub Pages publication method.
 * Add new crawler targets.
-* Enable sources whose robots / ToS / allowed-use review is incomplete.
+* Enable any source target without user approval.
+* Use sources whose robots / ToS / allowed-use review is incomplete.
+* Make large workflow, generator, or publishing-path changes.
 * Add external APIs.
 * Add paid services.
 * Add DB / authentication.

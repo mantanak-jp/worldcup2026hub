@@ -1,6 +1,6 @@
 # Crawler Future Plan
 
-The crawler is a core feature of the completed WorldCup2026Hub platform.
+The crawler is a core staged feature of the completed WorldCup2026Hub platform, not an optional future add-on.
 
 This PR does not implement the crawler. It defines the direction: source registry first, policy checks first, then staged crawler and generator implementation.
 
@@ -9,7 +9,7 @@ This PR does not implement the crawler. It defines the direction: source registr
 - Build a source registry before enabling scheduled crawling.
 - Define robots / ToS / allowed-use status for every source.
 - Keep `enabled=false` until a source is reviewed.
-- Use approved sources for scheduled crawling.
+- Use approved sources for scheduled crawling during normal operation.
 - Store article metadata and extraction notes, not full external article bodies.
 - Never store downloaded external images.
 - Connect crawl output to generated match reviews.
@@ -33,9 +33,12 @@ User confirmation is required before:
 
 - Adding a new crawler target.
 - Setting `enabled=true` for a source.
+- Using a source with unresolved robots / ToS / allowed-use status.
 - Using external APIs.
 - Adding paid services.
 - Persisting anything beyond metadata, links, extraction notes, and original generated reviews.
+
+After a source is approved and enabled, scheduled crawling of that source may run automatically without per-run confirmation.
 
 ## Storage Policy
 

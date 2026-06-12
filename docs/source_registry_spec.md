@@ -54,6 +54,8 @@ No crawler target should be enabled until robots.txt, terms of service, and allo
 
 If any item is unknown, the source must remain `enabled=false`.
 
+After a source is reviewed, approved, and set to `enabled=true`, scheduled crawling may use it automatically without per-run confirmation.
+
 ## Allowed Use Values
 
 - `metadata-and-link-only`

@@ -2,6 +2,8 @@
 
 WorldCup2026Hub is an automated multilingual match review generation platform for the 2026 FIFA World Cup.
 
+The completed site assumes automatic collection, automatic generation, and automatic publishing as normal operation.
+
 The value of the site is not a match list or a collection of links. Its value is original Japanese match reviews generated from multiple languages, multiple source categories, and multiple viewpoints.
 
 ## Completed Site Vision
@@ -26,6 +28,8 @@ GitHub Pages is the presentation layer. The core product is the pipeline that co
 ## Auto Publication
 
 The platform is designed for automatic publication. Human review should not be required for every generated review during tournament operation.
+
+Once approved source registries, workflows, generators, and publishing paths are merged, routine tournament-operation runs may publish generated reviews and site updates automatically.
 
 The UI must make quality visible by displaying:
 

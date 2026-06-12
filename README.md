@@ -4,11 +4,13 @@ WorldCup2026Hub is an automated multilingual match review generation platform fo
 
 The finished system is intended to collect approved multilingual sources, organize article metadata and extraction notes by match and team, generate original Japanese match reviews, and publish updated static pages automatically.
 
+Automatic collection, automatic generation, and automatic publishing are the target operating model.
+
 ## Goals
 
 - Generate original Japanese match reviews from multiple source categories.
 - Track source coverage, confidence, generation version, and update history.
-- Keep code changes PR-based while allowing tournament data and generated reviews to be automated later.
+- Keep code changes PR-based while allowing approved tournament data updates, generated reviews, site artifacts, and Pages output to be automated during operation.
 
 ## Repository Structure
 

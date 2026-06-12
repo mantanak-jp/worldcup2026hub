@@ -68,6 +68,8 @@ Generated reviews should be linked to:
 
 The UI should clearly display source coverage, confidence, generation version, generated time, and review status so readers can judge quality.
 
+Manual review can be used for low-confidence, insufficient-source, or unresolved-policy reviews, but it is not a required gate for every generated review.
+
 ## Copyright Guardrails
 
 Generated reviews must not include copied article bodies, long quotations, or external images.
