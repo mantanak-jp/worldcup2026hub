@@ -45,6 +45,7 @@ This repository currently contains a plain static MVP and planning documents for
 - [Data Model](docs/data_model.md)
 - [Crawler Future Plan](docs/crawler_future_plan.md)
 - [Development Workflow](docs/development_workflow.md)
+- [v0.1 Release Checklist](docs/v01_release_checklist.md)
 
 ## Static MVP
 
