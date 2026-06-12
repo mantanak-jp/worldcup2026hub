@@ -41,6 +41,14 @@ Deploy failures should:
 - Leave generated data available for inspection
 - Make the failure visible to maintainers
 
+## Dry-Run Workflow Stage
+
+The first workflow stage may validate local JSON files and deterministic review-generation scripts without publishing anything.
+
+This dry-run stage may use `workflow_dispatch` and a scheduled trigger, but it must not run a crawler, call external APIs, read secrets, commit back to the repository, or deploy to GitHub Pages.
+
+Its purpose is to prove that repository data, local scripts, and generated-review schemas remain valid before an approved production publishing path is introduced.
+
 ## Review Status Display
 
 The UI should display states such as:
