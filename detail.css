@@ -218,6 +218,31 @@ a {
   font-size: 0.9rem;
 }
 
+.review-status-note {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.review-subhead {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+details.review-footnote {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+details.review-footnote summary {
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+details.review-footnote p {
+  margin-top: 8px;
+}
+
 @media (max-width: 760px) {
   .topbar {
     align-items: flex-start;

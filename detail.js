@@ -151,6 +151,36 @@ function formatSourceCoverage(coverage) {
   ];
 }
 
+function statusLabel(status) {
+  const labels = {
+    auto_draft: "Auto draft",
+    auto_published: "Auto published",
+    auto_updated: "Auto updated",
+    low_confidence: "Low confidence",
+    insufficient_sources: "Insufficient sources",
+    not_generated: "Not generated",
+    failed: "Failed"
+  };
+
+  return labels[status] || status || "Unknown";
+}
+
+function statusHelp(status) {
+  if (status === "auto_published") {
+    return "This review may be published automatically after approved automation runs.";
+  }
+
+  if (status === "low_confidence") {
+    return "This review is visible, but confidence is low and source coverage should be checked.";
+  }
+
+  if (status === "insufficient_sources") {
+    return "This review is a sample or early draft because source coverage is not yet sufficient.";
+  }
+
+  return "Generated review status is shown so readers can judge quality.";
+}
+
 function metricItems(items) {
   return items.map(([label, value]) => `
     <div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>
@@ -191,15 +221,18 @@ function renderGeneratedReview(data, matchId) {
     <p class="eyebrow">Generated match review</p>
     <div class="review-heading">
       <h2>${escapeHtml(review.title_ja || "Generated review")}</h2>
-      <span class="${reviewStatusClass(review.status)}">${escapeHtml(review.status || "unknown")}</span>
+      <span class="${reviewStatusClass(review.status)}">${escapeHtml(statusLabel(review.status))}</span>
     </div>
+    <p class="review-status-note">${escapeHtml(statusHelp(review.status))}</p>
     <p>${escapeHtml(review.short_summary_ja || "No short summary yet")}</p>
+    <h3 class="review-subhead">Source coverage</h3>
     <dl class="metric-list">
       ${metricItems(formatSourceCoverage(review.source_coverage))}
       <div><dt>Confidence</dt><dd>${escapeHtml(formatPercent(review.confidence))}</dd></div>
       <div><dt>Version</dt><dd>${escapeHtml(review.generation_version || "TBD")}</dd></div>
       <div><dt>Generated</dt><dd>${escapeHtml(review.generated_at || "TBD")}</dd></div>
     </dl>
+    <p class="review-status-note">Confidence is a local quality signal based on available structured sources and extraction notes, not a guarantee of correctness.</p>
     <div class="review-sections">
       <section><h3>Match flow</h3><p>${escapeHtml(review.match_flow_ja || "No match flow yet")}</p></section>
       <section><h3>Initial shapes</h3><p>${escapeHtml(review.initial_shapes_ja || "No initial shape notes yet")}</p></section>
@@ -212,8 +245,11 @@ function renderGeneratedReview(data, matchId) {
       <h3>Missing inputs</h3>
       <ul class="detail-list">${listItems(review.missing_inputs, "No missing inputs recorded")}</ul>
     </section>
-    <p class="review-footnote">Source IDs: ${escapeHtml((review.source_ids || []).join(", ") || "none")}</p>
-    <p class="review-footnote">Article IDs: ${escapeHtml((review.article_ids || []).join(", ") || "none")}</p>
+    <details class="review-footnote">
+      <summary>Input record IDs</summary>
+      <p>Source IDs: ${escapeHtml((review.source_ids || []).join(", ") || "none")}</p>
+      <p>Article IDs: ${escapeHtml((review.article_ids || []).join(", ") || "none")}</p>
+    </details>
   `;
 }
 
