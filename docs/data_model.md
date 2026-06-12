@@ -19,8 +19,9 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 
 ## Principles
 
-- Keep external content as metadata and links.
-- Do not store copied article bodies or external images.
+- Keep unreviewed external content as metadata, links, extraction notes, and generated review outputs.
+- Do not store copied article bodies or external images unless the source policy explicitly allows it and the user has approved that source policy.
+- Do not use paid external APIs, metered billing APIs, API keys, secrets, or billing accounts in the current implementation path.
 - Use stable IDs so pages can link to records before final data exists.
 - Keep status fields explicit so incomplete areas are visible in the UI.
 - Preserve a shape that can later move to Astro, MDX, or generated pages.
@@ -52,7 +53,11 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 
 ## Source Handling
 
-Sources are references. A source record may include URL, source name, language, source type, related match/team IDs, checked status, and concise Japanese notes. It must not include copied article text or downloaded external images.
+Sources are references. A source record may include URL, source name, language, source type, related match/team IDs, checked status, extraction notes, and concise Japanese notes.
+
+Future source registry records should include `content_storage_policy`, `full_text_storage_allowed`, `full_text_storage_status`, `paid_api_required`, and `api_cost_policy` so content and cost boundaries are explicit before automation uses the source.
+
+Unreviewed sources must default to no full text storage, no external image storage, and no paid API usage.
 
 ## Generated Review Handling
 
