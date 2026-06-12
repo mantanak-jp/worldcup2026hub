@@ -1,0 +1,42 @@
+name: Review generation dry run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 0 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-local-review-generation:
+    name: Validate local review generation inputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check detail.js
+          if [ -f tools/generate_match_review_sample.js ]; then
+            node --check tools/generate_match_review_sample.js
+          fi
+          if [ -f tools/generate_structured_review_sample.js ]; then
+            node --check tools/generate_structured_review_sample.js
+          fi
+
+      - name: Validate JSON data files
+        run: |
+          node -e "const fs=require('fs'); const path=require('path'); for (const file of fs.readdirSync('data').filter((name)=>name.endsWith('.json'))) { JSON.parse(fs.readFileSync(path.join('data', file), 'utf8')); console.log('valid', file); }"
+
+      - name: Run local generator dry run if available
+        run: |
+          if [ -f tools/generate_match_review_sample.js ]; then
+            node tools/generate_match_review_sample.js
+          elif [ -f tools/generate_structured_review_sample.js ]; then
+            node tools/generate_structured_review_sample.js
+          else
+            echo "No local review generator script is present yet; JSON and syntax checks completed."
+          fi
