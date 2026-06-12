@@ -86,3 +86,9 @@ Unreviewed sources must default to no full text storage, no external image stora
 ## Generated Review Handling
 
 Generated reviews are original Japanese synthesis based on multiple sources and structured match data. They should link to source IDs, article IDs, and generation run IDs. They must not include copied article bodies, long quotations, or external images.
+
+## Crawl Run Handling
+
+`data/crawl_runs.json` records planned, dry-run, scheduled, and match-window crawler runs. Early records may be samples with zero discovered/stored/extracted counts so the UI and workflow can validate shape before real crawling is approved.
+
+Crawl run records should include policy-blocked counts and notes so disabled or unapproved sources remain visible without being used.

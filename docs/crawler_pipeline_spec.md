@@ -69,3 +69,13 @@ The crawler should record:
 - impact on review generation
 
 Crawler failures should not block the whole site. They should reduce source coverage and confidence where relevant.
+
+## Crawl Run Records
+
+`data/crawl_runs.json` records planned, dry-run, scheduled, and match-window crawler activity.
+
+In the current scaffold, crawl run records are samples only. They must not imply that real crawling has happened.
+
+Minimum fields include `id`, `run_type`, `status`, `trigger`, `started_at`, `completed_at`, `source_ids`, `discovered_article_count`, `stored_article_count`, `extraction_count`, `error_count`, `policy_blocked_count`, and `notes`.
+
+Source targets must remain `enabled=false` until user approval. Dry-run records must not call external APIs, use paid APIs, store full text, store external images, or execute a real crawler.
