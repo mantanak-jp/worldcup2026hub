@@ -1,10 +1,11 @@
 const dataFiles = {
-  matches: "data/matches.json",
-  teams: "data/teams.json",
-  resultReports: "data/result_reports.json",
-  tacticalReviews: "data/tactical_reviews.json",
-  sources: "data/sources.json",
-  updateHistory: "data/update_history.json"
+  matches: { path: "data/matches.json" },
+  teams: { path: "data/teams.json" },
+  resultReports: { path: "data/result_reports.json" },
+  tacticalReviews: { path: "data/tactical_reviews.json" },
+  sources: { path: "data/sources.json" },
+  updateHistory: { path: "data/update_history.json" },
+  generatedMatchReviews: { path: "data/generated_match_reviews.json", optional: true, fallback: [] }
 };
 
 function byId(items) {
@@ -64,11 +65,15 @@ function listItems(items, emptyText = "None yet") {
 
 async function loadData() {
   const entries = await Promise.all(
-    Object.entries(dataFiles).map(async ([key, path]) => {
-      const response = await fetch(path);
+    Object.entries(dataFiles).map(async ([key, config]) => {
+      const response = await fetch(config.path);
 
       if (!response.ok) {
-        throw new Error(`Failed to load ${path}: ${response.status}`);
+        if (config.optional && response.status === 404) {
+          return [key, config.fallback];
+        }
+
+        throw new Error(`Failed to load ${config.path}: ${response.status}`);
       }
 
       return [key, await response.json()];
@@ -120,6 +125,98 @@ function updateHistoryList(records) {
   `).join("");
 }
 
+function formatPercent(value) {
+  if (typeof value !== "number") {
+    return "TBD";
+  }
+
+  return `${Math.round(value * 100)}%`;
+}
+
+function formatSourceCoverage(coverage) {
+  if (!coverage || typeof coverage !== "object") {
+    return [
+      ["Coverage", "TBD"],
+      ["Sources", "0"],
+      ["Articles", "0"],
+      ["Languages", "TBD"]
+    ];
+  }
+
+  return [
+    ["Coverage", coverage.coverage_level || "TBD"],
+    ["Sources", String(coverage.source_count ?? 0)],
+    ["Articles", String(coverage.article_count ?? 0)],
+    ["Languages", (coverage.languages || []).join(", ") || "TBD"]
+  ];
+}
+
+function metricItems(items) {
+  return items.map(([label, value]) => `
+    <div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>
+  `).join("");
+}
+
+function reviewStatusClass(status) {
+  if (status === "auto_published") {
+    return "status-pill status-good";
+  }
+
+  if (status === "low_confidence" || status === "insufficient_sources") {
+    return "status-pill status-warn";
+  }
+
+  return "status-pill";
+}
+
+function renderGeneratedReview(data, matchId) {
+  const panel = document.querySelector("[data-generated-review-panel]");
+
+  if (!panel) {
+    return;
+  }
+
+  const review = (data.generatedMatchReviews || []).find((item) => item.match_id === matchId);
+
+  if (!review) {
+    panel.innerHTML = `
+      <p class="eyebrow">Generated match review</p>
+      <h2>No generated review yet</h2>
+      <p>Generated reviews will appear here after an approved local generation run creates review data for this match.</p>
+    `;
+    return;
+  }
+
+  panel.innerHTML = `
+    <p class="eyebrow">Generated match review</p>
+    <div class="review-heading">
+      <h2>${escapeHtml(review.title_ja || "Generated review")}</h2>
+      <span class="${reviewStatusClass(review.status)}">${escapeHtml(review.status || "unknown")}</span>
+    </div>
+    <p>${escapeHtml(review.short_summary_ja || "No short summary yet")}</p>
+    <dl class="metric-list">
+      ${metricItems(formatSourceCoverage(review.source_coverage))}
+      <div><dt>Confidence</dt><dd>${escapeHtml(formatPercent(review.confidence))}</dd></div>
+      <div><dt>Version</dt><dd>${escapeHtml(review.generation_version || "TBD")}</dd></div>
+      <div><dt>Generated</dt><dd>${escapeHtml(review.generated_at || "TBD")}</dd></div>
+    </dl>
+    <div class="review-sections">
+      <section><h3>Match flow</h3><p>${escapeHtml(review.match_flow_ja || "No match flow yet")}</p></section>
+      <section><h3>Initial shapes</h3><p>${escapeHtml(review.initial_shapes_ja || "No initial shape notes yet")}</p></section>
+      <section><h3>Key tactical themes</h3><p>${escapeHtml(review.key_tactical_themes_ja || "No tactical themes yet")}</p></section>
+      <section><h3>Turning points</h3><p>${escapeHtml(review.turning_points_ja || "No turning points yet")}</p></section>
+      <section><h3>Source consensus</h3><p>${escapeHtml(review.source_consensus_ja || "No consensus notes yet")}</p></section>
+      <section><h3>Source disagreement</h3><p>${escapeHtml(review.source_disagreement_ja || "No disagreement notes yet")}</p></section>
+    </div>
+    <section class="missing-inputs">
+      <h3>Missing inputs</h3>
+      <ul class="detail-list">${listItems(review.missing_inputs, "No missing inputs recorded")}</ul>
+    </section>
+    <p class="review-footnote">Source IDs: ${escapeHtml((review.source_ids || []).join(", ") || "none")}</p>
+    <p class="review-footnote">Article IDs: ${escapeHtml((review.article_ids || []).join(", ") || "none")}</p>
+  `;
+}
+
 function renderMatch(data, id) {
   const match = data.matches.find((item) => item.id === id);
 
@@ -157,6 +254,7 @@ function renderMatch(data, id) {
   document.querySelector("[data-review-themes]").innerHTML = listItems(review?.themes, "No tactical themes yet");
   document.querySelector("[data-review-summary]").textContent = review?.summary_ja || "No tactical summary yet";
   document.querySelector("[data-review-formation]").textContent = review?.formation_notes || "No formation notes yet";
+  renderGeneratedReview(data, match.id);
   document.querySelector("[data-source-list]").innerHTML = sourceList([...sourceIds], data.sources);
   document.querySelector("[data-update-history]").innerHTML = updateHistoryList(history);
 }
