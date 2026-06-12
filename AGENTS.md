@@ -42,8 +42,10 @@ Feature work should normally be done in worktrees.
 * Prefer worktree + feature branch for implementation work.
 * Keep changes small and reviewable.
 * Codex may create branches and worktrees when needed.
+* Codex may use multiple independent worktrees in parallel when tasks are separable.
 * Codex may commit and push changes after checking the diff.
 * Codex may create pull requests when appropriate.
+* Codex should document PR dependencies and likely conflicts in PR bodies.
 * Do not merge pull requests unless the user explicitly approves.
 * Do not force push unless the user explicitly approves.
 * Do not delete branches, tags, or worktrees unless the user explicitly approves.
