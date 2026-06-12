@@ -11,7 +11,7 @@ No crawler target should be enabled until robots.txt, terms of service, and allo
 - `base_url`: source home URL.
 - `languages`: list of expected languages.
 - `country_or_region`: primary country or region.
-- `source_category`: source role.
+- `source_category`: source role list. Use an array even when the source currently has one category.
 - `crawl_method`: discovery or fetch method.
 - `discovery_methods`: list of discovery approaches.
 - `access_type`: public, paywalled, API, manual, or disabled.
