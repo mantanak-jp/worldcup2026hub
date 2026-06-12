@@ -4,6 +4,8 @@ WorldCup2026Hub is an automated multilingual match review generation platform fo
 
 The completed site assumes automatic collection, automatic generation, and automatic publishing as normal operation.
 
+Public v0.1 is not the completed system. It is a static preview using sample and dry-run data so the page structure, source coverage display, confidence display, and generated review status can be reviewed before real crawling or Pages publication settings are enabled.
+
 The value of the site is not a match list or a collection of links. Its value is original Japanese match reviews generated from multiple languages, multiple source categories, and multiple viewpoints.
 
 ## Completed Site Vision
@@ -41,3 +43,14 @@ The UI must make quality visible by displaying:
 - Source list and source categories
 
 Low-confidence or insufficient-source reviews may still be visible if their status is clear.
+
+## Public v0.1 Readiness
+
+The first public version should clearly state that:
+
+- Source registry entries are candidates unless explicitly approved.
+- No source target is enabled.
+- No real crawler is running.
+- No paid API, secret, billing account, DB, or auth is used.
+- Generated reviews are sample or dry-run outputs until approved automation produces tournament data.
+- GitHub Pages publication settings require user confirmation before launch.
