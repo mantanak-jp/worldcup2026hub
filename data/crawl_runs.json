@@ -1,0 +1,32 @@
+[
+  {
+    "id": "crawl-run-sample-planned-001",
+    "run_type": "scheduled_validation_sample",
+    "status": "planned",
+    "trigger": "manual_sample",
+    "started_at": null,
+    "completed_at": null,
+    "source_ids": ["candidate-official-fifa", "candidate-tactical-analysis-ja"],
+    "discovered_article_count": 0,
+    "stored_article_count": 0,
+    "extraction_count": 0,
+    "error_count": 0,
+    "policy_blocked_count": 2,
+    "notes": "Planned scaffold only. No real crawling, external API, paid API, or full text storage."
+  },
+  {
+    "id": "crawl-run-sample-dry-run-001",
+    "run_type": "local_policy_dry_run",
+    "status": "dry_run",
+    "trigger": "workflow_validation_sample",
+    "started_at": "2026-06-12T00:00:00Z",
+    "completed_at": "2026-06-12T00:00:00Z",
+    "source_ids": ["candidate-statistics-source"],
+    "discovered_article_count": 0,
+    "stored_article_count": 0,
+    "extraction_count": 0,
+    "error_count": 0,
+    "policy_blocked_count": 1,
+    "notes": "Dry-run scaffold record. Source remains disabled and no crawler executed."
+  }
+]
