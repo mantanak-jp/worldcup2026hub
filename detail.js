@@ -81,12 +81,12 @@ async function loadData() {
 function renderError(error) {
   console.error(error);
   const shell = document.querySelector("[data-detail-shell]");
-  shell.innerHTML = `<section class="panel"><h1>Unable to load detail data</h1><p>Please check the JSON files and try again.</p></section>`;
+  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">Load error</p><h1>Unable to load detail data</h1><p>Please check the JSON files and try again.</p></section>`;
 }
 
 function renderFallback(message) {
   const shell = document.querySelector("[data-detail-shell]");
-  shell.innerHTML = `<section class="panel"><h1>${escapeHtml(message)}</h1><p>Return to the top page and choose another card.</p></section>`;
+  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">Not found</p><h1>${escapeHtml(message)}</h1><p>Return to the top page and choose another card.</p></section>`;
 }
 
 function sourceList(sourceIds, sources) {
