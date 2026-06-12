@@ -43,6 +43,7 @@ This repository currently contains a plain static MVP and planning documents for
 - [Publishing Automation Specification](docs/publishing_automation_spec.md)
 - [Data Model](docs/data_model.md)
 - [Crawler Future Plan](docs/crawler_future_plan.md)
+- [Development Workflow](docs/development_workflow.md)
 
 ## Static MVP
 
