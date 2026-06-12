@@ -29,19 +29,41 @@ function outlineForMatch(outlines, matchId) {
   return (outlines || []).find((outline) => outline.match_id === matchId);
 }
 
+function buildSourceCoverage(outline, tacticalClaims) {
+  if (outline?.source_coverage && typeof outline.source_coverage === "object") {
+    return {
+      source_count: outline.source_coverage.source_count ?? 0,
+      article_count: outline.source_coverage.article_count ?? 0,
+      languages: outline.source_coverage.languages || [],
+      coverage_level: outline.source_coverage.coverage_level || "insufficient_sources"
+    };
+  }
+
+  const sourceIds = new Set(tacticalClaims.flatMap((claim) => claim.supporting_source_ids || []));
+  const articleIds = new Set(tacticalClaims.flatMap((claim) => claim.supporting_article_ids || []));
+
+  return {
+    source_count: sourceIds.size,
+    article_count: articleIds.size,
+    languages: sourceIds.size > 0 ? ["unknown"] : [],
+    coverage_level: sourceIds.size >= 2 && articleIds.size >= 2 ? "partial" : "insufficient_sources"
+  };
+}
+
 function buildReview(match, teams, claims, outline) {
   const home = teamName(teams, match.home_team_id);
   const away = teamName(teams, match.away_team_id);
   const tacticalClaims = claimsForMatch(claims, match.id);
-  const sourceCoverage = outline?.source_coverage ?? (tacticalClaims.length > 0 ? 0.35 : 0.1);
+  const sourceCoverage = buildSourceCoverage(outline, tacticalClaims);
   const confidence = outline?.confidence ?? (tacticalClaims.length > 0 ? 0.4 : 0.2);
+  const publishable = sourceCoverage.coverage_level !== "insufficient_sources" && confidence >= 0.6;
   const themes = tacticalClaims.map((claim) => claim.claim_ja).filter(Boolean);
 
   return {
     id: `generated-${match.id}-dry-run`,
     match_id: match.id,
     generation_run_id: "local-dry-run",
-    status: sourceCoverage >= 0.6 && confidence >= 0.6 ? "auto_draft" : "insufficient_sources",
+    status: publishable ? "auto_draft" : "insufficient_sources",
     title_ja: `${home} vs ${away} 自動レビュー dry-run`,
     short_summary_ja: "このレビューは外部APIやネットワークを使わず、ローカルJSONだけから生成した検証用サンプルです。",
     match_flow_ja: `${home} と ${away} の試合展開は、現時点ではサンプルデータに基づく仮説整理に留めます。`,

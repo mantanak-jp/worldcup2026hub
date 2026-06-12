@@ -1,0 +1,34 @@
+[
+  {
+    "id": "claim-match-001-pressing-sample",
+    "match_id": "match-001",
+    "team_id": "team-canada",
+    "phase": "out_of_possession",
+    "topic": "pressing",
+    "claim_ja": "カナダは前線からの制限よりも、中盤での回収位置を重視する可能性がある。",
+    "supporting_source_ids": ["source-fifa-match-centre"],
+    "supporting_article_ids": [],
+    "opposing_source_ids": [],
+    "opposing_article_ids": [],
+    "confidence": 0.35,
+    "evidence_level": "single_source_placeholder",
+    "disputed_by": [],
+    "notes": "Sample source-based claim. No video-derived independent assertion."
+  },
+  {
+    "id": "claim-match-001-transition-sample",
+    "match_id": "match-001",
+    "team_id": "team-canada",
+    "phase": "transition_attack",
+    "topic": "counter_attack",
+    "claim_ja": "攻撃移行ではサイドの前進と早い縦パスが論点になる可能性がある。",
+    "supporting_source_ids": ["source-fifa-match-centre"],
+    "supporting_article_ids": [],
+    "opposing_source_ids": [],
+    "opposing_article_ids": [],
+    "confidence": 0.3,
+    "evidence_level": "single_source_placeholder",
+    "disputed_by": [],
+    "notes": "Placeholder claim for dry-run outline generation."
+  }
+]
