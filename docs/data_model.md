@@ -87,6 +87,14 @@ Unreviewed sources must default to no full text storage, no external image stora
 
 Generated reviews are original Japanese synthesis based on multiple sources and structured match data. They should link to source IDs, article IDs, and generation run IDs. They must not include copied article bodies, long quotations, or external images.
 
+## Article And Extraction Handling
+
+`data/articles.json` is metadata-only. It may include article URL, title, source ID, language, source category, related match/team IDs, timestamps, extraction status, content storage policy, and `full_text_stored=false`.
+
+`data/article_extractions.json` stores short original Japanese extraction notes, topic tags, tactical phases, linked claim IDs, confidence, and missing inputs. These notes are the bridge from source metadata to `tactical_claims`; they are not copied article bodies.
+
+Unapproved sources must remain metadata-only or manual-review-needed until source policy review is complete.
+
 ## Crawl Run Handling
 
 `data/crawl_runs.json` records planned, dry-run, scheduled, and match-window crawler runs. Early records may be samples with zero discovered/stored/extracted counts so the UI and workflow can validate shape before real crawling is approved.
