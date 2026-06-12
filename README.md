@@ -11,6 +11,7 @@ Automatic collection, automatic generation, and automatic publishing are the tar
 - Generate original Japanese match reviews from multiple source categories.
 - Track source coverage, confidence, generation version, and update history.
 - Keep code changes PR-based while allowing approved tournament data updates, generated reviews, site artifacts, and Pages output to be automated during operation.
+- Keep the current implementation path free of paid external APIs, secrets, and billing-account dependencies; source content storage is governed by explicit source policy.
 
 ## Repository Structure
 
@@ -43,6 +44,7 @@ This repository currently contains a plain static MVP and planning documents for
 - [Publishing Automation Specification](docs/publishing_automation_spec.md)
 - [Data Model](docs/data_model.md)
 - [Crawler Future Plan](docs/crawler_future_plan.md)
+- [Development Workflow](docs/development_workflow.md)
 
 ## Static MVP
 
@@ -53,3 +55,4 @@ The current site shell is plain HTML, CSS, JavaScript, and JSON so it can run di
 - `app.js`: client-side JSON loading and rendering for the MVP shell.
 - `match.html` / `team.html`: detail page shells driven by URL `id` parameters.
 - `data/*.json`: static data records for matches, teams, reports, reviews, sources, and update history.
+- Automation scaffold JSON files define future source registry and generated review records without enabling crawler targets.

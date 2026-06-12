@@ -86,12 +86,12 @@ async function loadData() {
 function renderError(error) {
   console.error(error);
   const shell = document.querySelector("[data-detail-shell]");
-  shell.innerHTML = `<section class="panel"><h1>Unable to load detail data</h1><p>Please check the JSON files and try again.</p></section>`;
+  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">Load error</p><h1>Unable to load detail data</h1><p>Please check the JSON files and try again.</p></section>`;
 }
 
 function renderFallback(message) {
   const shell = document.querySelector("[data-detail-shell]");
-  shell.innerHTML = `<section class="panel"><h1>${escapeHtml(message)}</h1><p>Return to the top page and choose another card.</p></section>`;
+  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">Not found</p><h1>${escapeHtml(message)}</h1><p>Return to the top page and choose another card.</p></section>`;
 }
 
 function sourceList(sourceIds, sources) {
@@ -133,6 +133,30 @@ function formatPercent(value) {
   return `${Math.round(value * 100)}%`;
 }
 
+function formatSourceCoverage(coverage) {
+  if (!coverage || typeof coverage !== "object") {
+    return [
+      ["Coverage", "TBD"],
+      ["Sources", "0"],
+      ["Articles", "0"],
+      ["Languages", "TBD"]
+    ];
+  }
+
+  return [
+    ["Coverage", coverage.coverage_level || "TBD"],
+    ["Sources", String(coverage.source_count ?? 0)],
+    ["Articles", String(coverage.article_count ?? 0)],
+    ["Languages", (coverage.languages || []).join(", ") || "TBD"]
+  ];
+}
+
+function metricItems(items) {
+  return items.map(([label, value]) => `
+    <div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>
+  `).join("");
+}
+
 function reviewStatusClass(status) {
   if (status === "auto_published") {
     return "status-pill status-good";
@@ -171,7 +195,7 @@ function renderGeneratedReview(data, matchId) {
     </div>
     <p>${escapeHtml(review.short_summary_ja || "No short summary yet")}</p>
     <dl class="metric-list">
-      <div><dt>Source coverage</dt><dd>${escapeHtml(formatPercent(review.source_coverage))}</dd></div>
+      ${metricItems(formatSourceCoverage(review.source_coverage))}
       <div><dt>Confidence</dt><dd>${escapeHtml(formatPercent(review.confidence))}</dd></div>
       <div><dt>Version</dt><dd>${escapeHtml(review.generation_version || "TBD")}</dd></div>
       <div><dt>Generated</dt><dd>${escapeHtml(review.generated_at || "TBD")}</dd></div>
@@ -184,6 +208,10 @@ function renderGeneratedReview(data, matchId) {
       <section><h3>Source consensus</h3><p>${escapeHtml(review.source_consensus_ja || "No consensus notes yet")}</p></section>
       <section><h3>Source disagreement</h3><p>${escapeHtml(review.source_disagreement_ja || "No disagreement notes yet")}</p></section>
     </div>
+    <section class="missing-inputs">
+      <h3>Missing inputs</h3>
+      <ul class="detail-list">${listItems(review.missing_inputs, "No missing inputs recorded")}</ul>
+    </section>
     <p class="review-footnote">Source IDs: ${escapeHtml((review.source_ids || []).join(", ") || "none")}</p>
     <p class="review-footnote">Article IDs: ${escapeHtml((review.article_ids || []).join(", ") || "none")}</p>
   `;

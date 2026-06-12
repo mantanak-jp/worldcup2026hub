@@ -1,0 +1,31 @@
+[
+  {
+    "id": "generated-review-match-001-sample",
+    "match_id": "match-001",
+    "generation_run_id": "generation-run-match-001-sample",
+    "status": "auto_draft",
+    "title_ja": "カナダ対グループA対戦相手の自動生成レビュー案",
+    "short_summary_ja": "現時点では公式情報候補のみを参照したサンプルレビューです。十分な戦術ソースが集まるまでは信頼度を低く表示します。",
+    "match_flow_ja": "試合展開の記述は、今後の承認済みソース収集と抽出結果に基づいて更新します。",
+    "initial_shapes_ja": "初期配置は未確定です。承認済みの戦術分析ソースまたは公式データが必要です。",
+    "key_tactical_themes_ja": "主要戦術テーマは未生成です。複数ソースで確認できた論点のみを採用します。",
+    "turning_points_ja": "転換点は未生成です。",
+    "key_players_ja": "キープレーヤーは未生成です。",
+    "substitutions_and_adjustments_ja": "交代策と修正は未生成です。",
+    "source_consensus_ja": "現時点で合意形成に足る複数ソースはありません。",
+    "source_disagreement_ja": "相違点は未検出です。",
+    "next_match_implications_ja": "次戦への示唆は未生成です。",
+    "source_coverage": {
+      "source_count": 1,
+      "article_count": 0,
+      "languages": ["en"],
+      "coverage_level": "insufficient_sources"
+    },
+    "confidence": 0.28,
+    "generated_at": "2026-06-12T00:00:00+09:00",
+    "generation_version": "2026.0.1-sample",
+    "source_ids": ["source-fifa-match-centre"],
+    "article_ids": [],
+    "notes": "Placeholder generated review. Does not include external article bodies or long quotations."
+  }
+]

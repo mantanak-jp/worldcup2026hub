@@ -75,3 +75,7 @@ Manual review can be used for low-confidence, insufficient-source, or unresolved
 Generated reviews must not include copied article bodies, long quotations, or external images.
 
 They may cite source metadata and link to original sources. They should synthesize across sources in original Japanese prose.
+
+Review generation in the current path must not use paid external APIs, metered billing APIs, API keys, secrets, or billing accounts.
+
+Full external article text may be used as an input only in a future implementation where the source policy explicitly allows that use and the user has approved the source policy. Unreviewed sources default to metadata, URL, extraction notes, and generated review output only.
