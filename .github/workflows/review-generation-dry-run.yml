@@ -32,6 +32,9 @@ jobs:
           if [ -f tools/normalize_article_extractions.js ]; then
             node --check tools/normalize_article_extractions.js
           fi
+          if [ -f tools/validate_source_contracts.js ]; then
+            node --check tools/validate_source_contracts.js
+          fi
           if [ -f tools/normalize_tactical_claims.js ]; then
             node --check tools/normalize_tactical_claims.js
           fi
@@ -66,6 +69,10 @@ jobs:
           fi
           if [ -f tools/normalize_article_extractions.js ]; then
             node tools/normalize_article_extractions.js
+          fi
+          if [ -f tools/validate_source_contracts.js ]; then
+            node tools/validate_source_contracts.js
+            node tools/validate_source_contracts.js --self-test-negative
           fi
           if [ -f tools/normalize_tactical_claims.js ]; then
             node tools/normalize_tactical_claims.js

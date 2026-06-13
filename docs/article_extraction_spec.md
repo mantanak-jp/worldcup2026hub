@@ -163,6 +163,8 @@ It must:
 
 The validator is not a claim generator. It does not create tactical claims, infer formations, infer manager intent, or improve review prose.
 
+`tools/validate_source_contracts.js` runs before article/extraction validation in the local pipeline. Candidate-only sources may be referenced during fixture migration, but candidate records do not count as approved source coverage and must not be used as crawler input. A later compatibility PR will update review pipeline approval logic so candidate-only policy cannot be mistaken for approved operational coverage.
+
 ## Current Sample Scope
 
 Current records are sample / dry-run data only.

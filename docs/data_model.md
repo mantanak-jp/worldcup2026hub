@@ -10,7 +10,8 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 - `data/result_reports.json`: result report status and concise original summaries.
 - `data/tactical_reviews.json`: tactical review status and draft review fields.
 - `data/update_history.json`: manual or future automated update events.
-- `data/source_registry.json`: approved and candidate crawler sources, including policy status and enablement.
+- `data/source_candidates.json`: unapproved candidate and fixture sources under research and policy review.
+- `data/source_registry.json`: approved operational crawler sources, including policy status and runtime enablement.
 - `data/crawl_runs.json`: scheduled crawler and match-window crawler run records.
 - `data/articles.json`: metadata-only article registry linked to sources, matches, teams, policy state, and duplicate-detection keys.
 - `data/article_extractions.json`: short original extraction notes and structured source-based tags linked to articles, sources, matches, teams, and tactical claims.
@@ -24,7 +25,9 @@ The automation scaffold defines future data shapes. It is not crawler implementa
 
 ### `data/source_registry.json`
 
-Defines candidate and approved source records. Key fields include `id`, `name`, `base_url`, `languages`, `source_category`, `crawl_method`, `robots_policy_status`, `terms_policy_status`, `allowed_use`, `content_storage_policy`, `full_text_storage_allowed`, `paid_api_required`, `api_cost_policy`, `enabled`, and `priority`.
+Defines approved operational source records. Key fields include `id`, `name`, `base_url`, `languages`, `source_category`, `crawl_method`, `robots_policy_status`, `terms_policy_status`, `allowed_use`, `content_storage_policy`, `full_text_storage_allowed`, `external_image_storage_allowed`, `paid_api_required`, `api_cost_policy`, `approval_status`, `runtime_status`, compatibility `enabled`, `policy_evidence`, and `priority`.
+
+Unapproved source candidates and fixtures belong in `data/source_candidates.json`. Candidate records use `candidate_status`, policy research fields, and `policy_evidence`; they must not carry runtime enablement fields. Source IDs remain stable when promoted, but the same ID must not appear in both candidate and registry files.
 
 `enabled=true` is a boundary change and requires user confirmation. Wave 1 sample records must remain `enabled=false`.
 
@@ -89,6 +92,8 @@ Sources are references. A source record may include URL, source name, language, 
 Future source registry records should include `content_storage_policy`, `full_text_storage_allowed`, `full_text_storage_status`, `paid_api_required`, and `api_cost_policy` so content and cost boundaries are explicit before automation uses the source.
 
 Unreviewed sources must default to no full text storage, no external image storage, and no paid API usage.
+
+`tools/validate_source_contracts.js` validates candidate and registry source contracts before the Level 3 pipeline runs. It is migration-aware: the current disabled legacy registry records are tolerated as pending-migration records only and do not count as approved operational sources.
 
 ## Generated Review Handling
 
