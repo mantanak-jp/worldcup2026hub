@@ -18,6 +18,7 @@ It is not an external article reposting site or a translated-article roundup. Th
 
 - Generate original Japanese match reviews from multiple source categories.
 - Track source coverage, confidence, generation version, and update history.
+- Revisit each match after completion so delayed tactical reviews, long-form analysis, and comments can be incorporated into later review versions.
 - Keep code changes PR-based while allowing approved tournament data updates, generated reviews, site artifacts, and Pages output to be automated during operation.
 - Keep the current implementation path free of paid external APIs, secrets, and billing-account dependencies; source content storage is governed by explicit source policy.
 
@@ -45,12 +46,16 @@ The current public-readiness target is honest preview content: source targets re
 
 Public v0.1 copy and UI labels are primarily Japanese for readers, while technical docs and data field names may remain English.
 
+Current development position: Wave 3 is complete, and the project is before Wave 4 source approval and production-readiness work. The administrator interface is a confirmed future requirement, but implementation is deferred until the crawler, recurring schedule, runtime storage, and operational contracts are stable.
+
 ## Documentation
 
 - [Project Overview](docs/overview.md)
 - [Operations Notes](docs/operations.md)
 - [Site Concept](docs/site_concept.md)
 - [Product Requirements](docs/product_requirements.md)
+- [Development Roadmap](docs/development_roadmap.md)
+- [Administrator and Operations Requirements](docs/admin_operations_requirements.md)
 - [Source Registry Specification](docs/source_registry_spec.md)
 - [Crawler Pipeline Specification](docs/crawler_pipeline_spec.md)
 - [Review Generation Specification](docs/review_generation_spec.md)
