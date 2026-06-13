@@ -26,11 +26,20 @@ jobs:
           if [ -f tools/generate_structured_review_sample.js ]; then
             node --check tools/generate_structured_review_sample.js
           fi
+          if [ -f tools/generate_review_outline_sample.js ]; then
+            node --check tools/generate_review_outline_sample.js
+          fi
           if [ -f tools/normalize_article_extractions.js ]; then
             node --check tools/normalize_article_extractions.js
           fi
           if [ -f tools/normalize_tactical_claims.js ]; then
             node --check tools/normalize_tactical_claims.js
+          fi
+          if [ -f tools/normalize_review_outlines.js ]; then
+            node --check tools/normalize_review_outlines.js
+          fi
+          if [ -f tools/review_pipeline_lib.js ]; then
+            node --check tools/review_pipeline_lib.js
           fi
 
       - name: Validate JSON data files
@@ -44,6 +53,10 @@ jobs:
           fi
           if [ -f tools/generate_structured_review_sample.js ]; then
             node tools/generate_structured_review_sample.js
+            node tools/generate_structured_review_sample.js --validate
+          fi
+          if [ -f tools/generate_review_outline_sample.js ]; then
+            node tools/generate_review_outline_sample.js
           fi
           if [ -f tools/normalize_article_extractions.js ]; then
             node tools/normalize_article_extractions.js
@@ -51,6 +64,9 @@ jobs:
           if [ -f tools/normalize_tactical_claims.js ]; then
             node tools/normalize_tactical_claims.js
           fi
-          if [ ! -f tools/generate_match_review_sample.js ] && [ ! -f tools/generate_structured_review_sample.js ] && [ ! -f tools/normalize_article_extractions.js ] && [ ! -f tools/normalize_tactical_claims.js ]; then
+          if [ -f tools/normalize_review_outlines.js ]; then
+            node tools/normalize_review_outlines.js
+          fi
+          if [ ! -f tools/generate_match_review_sample.js ] && [ ! -f tools/generate_structured_review_sample.js ] && [ ! -f tools/generate_review_outline_sample.js ] && [ ! -f tools/normalize_article_extractions.js ] && [ ! -f tools/normalize_tactical_claims.js ] && [ ! -f tools/normalize_review_outlines.js ]; then
             echo "No local generator or normalizer script is present yet; JSON and syntax checks completed."
           fi

@@ -15,7 +15,8 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 - `data/articles.json`: metadata-only article registry linked to sources, matches, teams, policy state, and duplicate-detection keys.
 - `data/article_extractions.json`: short original extraction notes and structured source-based tags linked to articles, sources, matches, teams, and tactical claims.
 - `data/review_generation_runs.json`: generation run metadata, model/prompt version, inputs, status, and confidence.
-- `data/generated_match_reviews.json`: original Japanese generated match reviews linked to source, article, and generation-run IDs.
+- `data/review_outlines.json`: deterministic claim aggregation records by match, with section claim IDs, source coverage, confidence factors, missing inputs, uncertainty, and status.
+- `data/generated_match_reviews.json`: original Japanese generated match reviews linked to outlines, claims, sources, and articles.
 
 ## Automation Scaffold Files
 
@@ -35,9 +36,15 @@ External content storage is controlled by source policy. The default is metadata
 
 Tracks local or automated generation runs. Key fields include `id`, `match_id`, `status`, `trigger`, `input_source_ids`, `input_article_ids`, `generator_name`, `prompt_version`, `generation_version`, `source_coverage`, `confidence`, `started_at`, `completed_at`, and `notes`.
 
+### `data/review_outlines.json`
+
+Stores the deterministic bridge from `tactical_claims` to generated reviews. Key fields include `id`, `match_id`, `claim_ids`, `section_order`, section-specific claim ID arrays, `missing_inputs`, `source_coverage`, `confidence`, `confidence_factors`, `uncertainty`, `status`, `generation_version`, `generation_stability_key`, `created_at`, and `updated_at`.
+
+`source_coverage` includes source, article, extraction, language, source type, source policy, metadata-only, and coverage-level signals. Outline confidence is deterministic and should be recalculated by `tools/normalize_review_outlines.js`.
+
 ### `data/generated_match_reviews.json`
 
-Stores generated Japanese match reviews. Key fields include `id`, `match_id`, `generation_run_id`, `status`, review sections, `source_coverage`, `confidence`, `generated_at`, `generation_version`, `source_ids`, `article_ids`, and `notes`.
+Stores generated Japanese match reviews. Key fields include `id`, `match_id`, `outline_id`, `title_ja`, `short_summary_ja`, `sections`, `source_coverage`, `confidence`, `status`, `missing_inputs`, `uncertainty`, `disagreement_summary_ja`, `source_ids`, `article_ids`, `claim_ids`, `generation_version`, `generation_stability_key`, `generated_at`, and `updated_at`.
 
 Generated reviews must not include copied article bodies, long quotations, or external images.
 
@@ -85,7 +92,9 @@ Unreviewed sources must default to no full text storage, no external image stora
 
 ## Generated Review Handling
 
-Generated reviews are original Japanese synthesis based on multiple sources and structured match data. They should link to source IDs, article IDs, and generation run IDs. They must not include copied article bodies, long quotations, or external images.
+Generated reviews are original Japanese synthesis based on review outlines, source-grounded claims, and structured match data. They should link to outline IDs, claim IDs, source IDs, and article IDs. They must not include copied article bodies, long quotations, translated article bodies, or external images.
+
+Generated review `sections` should include `match_flow`, `initial_shapes`, `in_possession`, `out_of_possession`, `transitions`, `adjustments`, `substitutions`, `turning_points`, `key_players`, `source_consensus`, `source_disagreement`, and `limitations`. Sections without supporting claims stay empty except `limitations`, which may summarize missing inputs.
 
 ## Article And Extraction Handling
 
@@ -106,6 +115,12 @@ Unapproved sources must remain metadata-only or manual-review-needed until sourc
 Claims without supporting extraction, article, and source references are invalid. Article and source refs are validated against the extraction records so unsupported claims cannot enter generated reviews. Claim confidence is a deterministic local quality signal based on source count, article count, extraction count, language/source-type diversity, source policy state, opposing evidence, extraction confidence, metadata-only evidence, and missing inputs.
 
 `tools/normalize_tactical_claims.js` validates the claim layer without creating new claims or accessing external sources. New data should use `claim_text_ja`, `team_ids`, `tactical_phase`, and `tactical_theme`; local generators keep read-only fallback support for older `claim_ja` fixtures only.
+
+## Review Outline And Generation Handling
+
+`tools/generate_review_outline_sample.js` aggregates validated tactical claims by match and emits deterministic outlines. `tools/normalize_review_outlines.js` validates saved outlines against the same deterministic rules. `tools/generate_structured_review_sample.js` generates outline-derived Japanese review records. `tools/generate_match_review_sample.js` remains a backward-compatible wrapper for one match.
+
+This local pipeline is a sample / dry-run path. It does not run real crawling, call external APIs, use secrets, add paid services, deploy Pages, commit back to the repository, or store external article bodies/images.
 
 ## Crawl Run Handling
 

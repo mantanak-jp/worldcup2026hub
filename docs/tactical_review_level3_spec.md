@@ -113,6 +113,39 @@ Older sample records used `team_id`, `phase`, `topic`, and `claim_ja`. New sampl
 
 The script exits non-zero on validation errors and prints a deterministic JSON summary. `--self-test-negative` runs local negative fixtures for duplicate IDs, missing extraction refs, missing source refs, ungrounded claims, confidence range failures, and prohibited content fields.
 
+## Review Outline Contract
+
+`data/review_outlines.json` aggregates validated claims by match. It must carry claim IDs, deterministic section buckets, source coverage, confidence factors, uncertainty, missing inputs, status, generation version, stability key, and timestamps.
+
+Review outlines are responsible for sorting claims into sections and preserving disagreement. Generated reviews are responsible for turning those outline sections into short Japanese prose without adding new tactical assertions.
+
+The outline section order is:
+
+```text
+match_flow
+initial_shapes
+in_possession
+out_of_possession
+transitions
+adjustments
+substitutions
+turning_points
+key_players
+source_consensus
+source_disagreement
+limitations
+```
+
+Disagreement claims are routed to `disagreement_claim_ids` and should not be mixed into consensus. `consensus_claim_ids` requires stronger support than a single source.
+
+`tools/normalize_review_outlines.js` validates root shape, duplicate IDs, match and claim refs, section refs, disagreement refs, deterministic source coverage, confidence factors, confidence, missing inputs, status, generation version, stability key, prohibited content-like fields, and negative fixtures.
+
+## Japanese Review Generation
+
+Generated Japanese review text must be derived from outline sections. It must not translate a single article, closely paraphrase external article text, infer coach intent without claim support, imply independent video analysis, or resolve source disagreement as if one side is proven.
+
+Low-confidence and insufficient-source reviews should be short. Missing inputs flow into the `limitations` section. Empty sections remain empty.
+
 ## Review Requirements
 
 - Claims must link to supporting source IDs and article IDs when available.

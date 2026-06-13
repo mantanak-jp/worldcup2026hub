@@ -158,6 +158,7 @@ function statusLabel(status) {
     auto_updated: "自動更新済み",
     low_confidence: "信頼度低め",
     insufficient_sources: "ソース不足",
+    blocked: "生成停止",
     not_generated: "未生成",
     failed: "生成失敗"
   };
@@ -178,6 +179,10 @@ function statusHelp(status) {
     return "このレビューは、ソースカバレッジがまだ十分でない sample / early draft です。";
   }
 
+  if (status === "blocked") {
+    return "このレビューは、構造化claimや承認済み入力が不足しているため本文生成を止めています。";
+  }
+
   return "レビュー品質を判断できるよう、生成状態を表示しています。";
 }
 
@@ -187,12 +192,41 @@ function metricItems(items) {
   `).join("");
 }
 
+function reviewSectionBody(review, key, legacyField) {
+  return review.sections?.[key]?.body_ja || review[legacyField] || "";
+}
+
+function generatedReviewSections(review) {
+  const sections = [
+    ["試合の流れ", "match_flow", "match_flow_ja"],
+    ["初期配置", "initial_shapes", "initial_shapes_ja"],
+    ["保持局面", "in_possession", "in_possession_ja"],
+    ["非保持局面", "out_of_possession", "out_of_possession_ja"],
+    ["トランジション", "transitions", "key_tactical_themes_ja"],
+    ["修正", "adjustments", "substitutions_and_adjustments_ja"],
+    ["交代", "substitutions", "substitutions_and_adjustments_ja"],
+    ["転機", "turning_points", "turning_points_ja"],
+    ["キープレーヤー", "key_players", "key_players_ja"],
+    ["ソース間の一致点", "source_consensus", "source_consensus_ja"],
+    ["ソース間の相違点", "source_disagreement", "source_disagreement_ja"],
+    ["制約", "limitations", ""]
+  ];
+
+  const html = sections
+    .map(([title, key, legacyField]) => [title, reviewSectionBody(review, key, legacyField)])
+    .filter(([, body]) => body)
+    .map(([title, body]) => `<section><h3>${escapeHtml(title)}</h3><p>${escapeHtml(body)}</p></section>`)
+    .join("");
+
+  return html || "<section><h3>生成本文</h3><p>この試合の本文生成に使える構造化claimはまだありません。</p></section>";
+}
+
 function reviewStatusClass(status) {
   if (status === "auto_published") {
     return "status-pill status-good";
   }
 
-  if (status === "low_confidence" || status === "insufficient_sources") {
+  if (status === "low_confidence" || status === "insufficient_sources" || status === "blocked") {
     return "status-pill status-warn";
   }
 
@@ -234,12 +268,7 @@ function renderGeneratedReview(data, matchId) {
     </dl>
     <p class="review-status-note">信頼度は、現在利用できる構造化ソースと抽出メモに基づくローカルな品質目安であり、正確性を保証するものではありません。</p>
     <div class="review-sections">
-      <section><h3>試合の流れ</h3><p>${escapeHtml(review.match_flow_ja || "試合の流れはまだありません")}</p></section>
-      <section><h3>初期配置</h3><p>${escapeHtml(review.initial_shapes_ja || "初期配置メモはまだありません")}</p></section>
-      <section><h3>主な戦術テーマ</h3><p>${escapeHtml(review.key_tactical_themes_ja || "戦術テーマはまだありません")}</p></section>
-      <section><h3>転機</h3><p>${escapeHtml(review.turning_points_ja || "転機はまだありません")}</p></section>
-      <section><h3>ソース間の一致点</h3><p>${escapeHtml(review.source_consensus_ja || "一致点メモはまだありません")}</p></section>
-      <section><h3>ソース間の相違点</h3><p>${escapeHtml(review.source_disagreement_ja || "相違点メモはまだありません")}</p></section>
+      ${generatedReviewSections(review)}
     </div>
     <section class="missing-inputs">
       <h3>不足している入力</h3>
@@ -249,6 +278,7 @@ function renderGeneratedReview(data, matchId) {
       <summary>入力レコードID</summary>
       <p>Source IDs: ${escapeHtml((review.source_ids || []).join(", ") || "なし")}</p>
       <p>Article IDs: ${escapeHtml((review.article_ids || []).join(", ") || "なし")}</p>
+      <p>Claim IDs: ${escapeHtml((review.claim_ids || []).join(", ") || "なし")}</p>
     </details>
   `;
 }
