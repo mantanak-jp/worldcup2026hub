@@ -12,8 +12,8 @@ WorldCup2026Hub starts with static JSON files that can be read directly by a Git
 - `data/update_history.json`: manual or future automated update events.
 - `data/source_registry.json`: approved and candidate crawler sources, including policy status and enablement.
 - `data/crawl_runs.json`: scheduled crawler and match-window crawler run records.
-- `data/articles.json`: discovered article metadata linked to sources, matches, and teams.
-- `data/article_extractions.json`: extracted metadata, language, classification, and concise original notes derived from articles.
+- `data/articles.json`: metadata-only article registry linked to sources, matches, teams, policy state, and duplicate-detection keys.
+- `data/article_extractions.json`: short original extraction notes and structured source-based tags linked to articles, sources, matches, teams, and tactical claims.
 - `data/review_generation_runs.json`: generation run metadata, model/prompt version, inputs, status, and confidence.
 - `data/generated_match_reviews.json`: original Japanese generated match reviews linked to source, article, and generation-run IDs.
 
@@ -89,9 +89,13 @@ Generated reviews are original Japanese synthesis based on multiple sources and 
 
 ## Article And Extraction Handling
 
-`data/articles.json` is metadata-only. It may include article URL, title, source ID, language, source category, related match/team IDs, timestamps, extraction status, content storage policy, and `full_text_stored=false`.
+`data/articles.json` is metadata-only. It may include article URL, canonical URL, title, source ID, language, source category, article type, related match/team IDs, author/publisher metadata, timestamps, extraction status, content storage policy, duplicate-detection keys, generation stability keys, and `full_text_stored=false`.
 
-`data/article_extractions.json` stores short original Japanese extraction notes, topic tags, tactical phases, linked claim IDs, confidence, and missing inputs. These notes are the bridge from source metadata to `tactical_claims`; they are not copied article bodies.
+`data/article_extractions.json` stores short original Japanese extraction notes, topic tags, tactical phases, tactical themes, named players/managers, supporting source/article IDs, opposing source/article IDs, linked claim IDs, uncertainty, disagreement notes, evidence metadata, confidence, and missing inputs. These notes are the bridge from source metadata to `tactical_claims`; they are not copied article bodies, translations, close paraphrases, or long quotations.
+
+Article IDs, extraction IDs, source IDs, match IDs, team IDs, and linked claim IDs should be stable and validator-checkable. Article `source_id` may refer to `data/sources.json` or `data/source_registry.json` while the project transitions from display sources to crawler registry records.
+
+`tools/normalize_article_extractions.js` validates the local article/extraction contract. It checks root array shape, duplicate IDs, required fields, source/match/team/article/claim references, status and language values, missing-input arrays, confidence ranges, and suspicious content fields that could indicate article body or image storage.
 
 Unapproved sources must remain metadata-only or manual-review-needed until source policy review is complete.
 
