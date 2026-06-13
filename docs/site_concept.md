@@ -4,9 +4,13 @@ WorldCup2026Hub is an automated multilingual match review generation platform fo
 
 The completed site assumes automatic collection, automatic generation, and automatic publishing as normal operation.
 
-Public v0.1 is not the completed system. It is a static preview using sample and dry-run data so the page structure, source coverage display, confidence display, and generated review status can be reviewed before real crawling or Pages publication settings are enabled.
+Public v0.1 is not the completed system. It is a static preview using sample and dry-run data so the page structure, source coverage display, confidence display, and generated review status can be reviewed before real crawling, source enablement, or publishing automation is enabled.
 
 The value of the site is not a match list or a collection of links. Its value is original Japanese match reviews generated from multiple languages, multiple source categories, and multiple viewpoints.
+
+For readers, the promise is simple: they should be able to read a Japanese match review organized from tactical reviews, match analysis, local media reports, official information, and other sources without visiting every country-specific site individually. When they want to verify the basis of a review, the source metadata and source links should make that path clear.
+
+WorldCup2026Hub is not an external article reposting site, a long-quote archive, or a translated-article roundup. It should publish source-aware original Japanese reviews while preserving copyright, terms-of-service, and source-policy guardrails.
 
 ## Completed Site Vision
 
@@ -53,4 +57,5 @@ The first public version should clearly state that:
 - No real crawler is running.
 - No paid API, secret, billing account, DB, or auth is used.
 - Generated reviews are sample or dry-run outputs until approved automation produces tournament data.
-- GitHub Pages publication settings require user confirmation before launch.
+- Initial GitHub Pages publication has been verified at `https://mantanak-jp.github.io/worldcup2026hub/`.
+- Future Pages deployment automation or publication-setting changes require user confirmation.

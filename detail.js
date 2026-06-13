@@ -38,7 +38,7 @@ function getIdFromUrl() {
 
 function formatDate(value) {
   if (!value) {
-    return "Kickoff TBD";
+    return "キックオフ未定";
   }
 
   return new Intl.DateTimeFormat("ja-JP", {
@@ -49,13 +49,13 @@ function formatDate(value) {
 
 function scoreText(score) {
   if (!score || score.home === null || score.away === null) {
-    return "Score TBD";
+    return "スコア未定";
   }
 
   return `${score.home} - ${score.away}`;
 }
 
-function listItems(items, emptyText = "None yet") {
+function listItems(items, emptyText = "まだありません") {
   if (!items || items.length === 0) {
     return `<li>${escapeHtml(emptyText)}</li>`;
   }
@@ -86,12 +86,12 @@ async function loadData() {
 function renderError(error) {
   console.error(error);
   const shell = document.querySelector("[data-detail-shell]");
-  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">Load error</p><h1>Unable to load detail data</h1><p>Please check the JSON files and try again.</p></section>`;
+  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">読み込みエラー</p><h1>詳細データを読み込めませんでした</h1><p>JSONファイルの状態を確認してください。</p></section>`;
 }
 
 function renderFallback(message) {
   const shell = document.querySelector("[data-detail-shell]");
-  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">Not found</p><h1>${escapeHtml(message)}</h1><p>Return to the top page and choose another card.</p></section>`;
+  shell.innerHTML = `<section class="panel message-panel"><p class="eyebrow">見つかりません</p><h1>${escapeHtml(message)}</h1><p>トップページに戻り、別のカードを選んでください。</p></section>`;
 }
 
 function sourceList(sourceIds, sources) {
@@ -99,28 +99,28 @@ function sourceList(sourceIds, sources) {
   const items = (sourceIds || []).map((id) => sourceMap.get(id)).filter(Boolean);
 
   if (items.length === 0) {
-    return "<li>No reference sources yet</li>";
+    return "<li>参照ソースはまだありません</li>";
   }
 
   return items.map((source) => `
     <li>
       <a href="${escapeHtml(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)}</a>
       <p>${escapeHtml(source.source_type)} / ${escapeHtml(source.language)} / ${escapeHtml(source.checked_status)}</p>
-      <p>${escapeHtml(source.japanese_note || "No note yet")}</p>
+      <p>${escapeHtml(source.japanese_note || "メモはまだありません")}</p>
     </li>
   `).join("");
 }
 
 function updateHistoryList(records) {
   if (!records || records.length === 0) {
-    return "<li>No update history yet</li>";
+    return "<li>更新履歴はまだありません</li>";
   }
 
   return records.map((record) => `
     <li>
       <strong>${escapeHtml(record.status)}</strong>
       <p>${escapeHtml(record.summary)}</p>
-      <p>${escapeHtml(record.updated_at || "Updated time TBD")} / ${escapeHtml(record.updated_by || "unknown")}</p>
+      <p>${escapeHtml(record.updated_at || "更新時刻未定")} / ${escapeHtml(record.updated_by || "unknown")}</p>
     </li>
   `).join("");
 }
@@ -136,30 +136,30 @@ function formatPercent(value) {
 function formatSourceCoverage(coverage) {
   if (!coverage || typeof coverage !== "object") {
     return [
-      ["Coverage", "TBD"],
-      ["Sources", "0"],
-      ["Articles", "0"],
-      ["Languages", "TBD"]
+      ["カバレッジ", "未定"],
+      ["ソース数", "0"],
+      ["記事数", "0"],
+      ["言語", "未定"]
     ];
   }
 
   return [
-    ["Coverage", coverage.coverage_level || "TBD"],
-    ["Sources", String(coverage.source_count ?? 0)],
-    ["Articles", String(coverage.article_count ?? 0)],
-    ["Languages", (coverage.languages || []).join(", ") || "TBD"]
+    ["カバレッジ", coverage.coverage_level || "未定"],
+    ["ソース数", String(coverage.source_count ?? 0)],
+    ["記事数", String(coverage.article_count ?? 0)],
+    ["言語", (coverage.languages || []).join(", ") || "未定"]
   ];
 }
 
 function statusLabel(status) {
   const labels = {
-    auto_draft: "Auto draft",
-    auto_published: "Auto published",
-    auto_updated: "Auto updated",
-    low_confidence: "Low confidence",
-    insufficient_sources: "Insufficient sources",
-    not_generated: "Not generated",
-    failed: "Failed"
+    auto_draft: "自動生成ドラフト",
+    auto_published: "自動公開済み",
+    auto_updated: "自動更新済み",
+    low_confidence: "信頼度低め",
+    insufficient_sources: "ソース不足",
+    not_generated: "未生成",
+    failed: "生成失敗"
   };
 
   return labels[status] || status || "Unknown";
@@ -167,18 +167,18 @@ function statusLabel(status) {
 
 function statusHelp(status) {
   if (status === "auto_published") {
-    return "This review may be published automatically after approved automation runs.";
+    return "承認済みの自動化が動作した後、このレビューは自動公開対象になり得ます。";
   }
 
   if (status === "low_confidence") {
-    return "This review is visible, but confidence is low and source coverage should be checked.";
+    return "このレビューは表示されていますが、信頼度が低いためソース数と根拠を確認してください。";
   }
 
   if (status === "insufficient_sources") {
-    return "This review is a sample or early draft because source coverage is not yet sufficient.";
+    return "このレビューは、ソースカバレッジがまだ十分でない sample / early draft です。";
   }
 
-  return "Generated review status is shown so readers can judge quality.";
+  return "レビュー品質を判断できるよう、生成状態を表示しています。";
 }
 
 function metricItems(items) {
@@ -210,45 +210,45 @@ function renderGeneratedReview(data, matchId) {
 
   if (!review) {
     panel.innerHTML = `
-      <p class="eyebrow">Generated match review</p>
-      <h2>No generated review yet</h2>
-      <p>Generated reviews will appear here after an approved local generation run creates review data for this match.</p>
+      <p class="eyebrow">生成レビュー</p>
+      <h2>生成レビューはまだありません</h2>
+      <p>承認済みのローカル生成処理でこの試合のレビューデータが作成されると、ここに表示されます。</p>
     `;
     return;
   }
 
   panel.innerHTML = `
-    <p class="eyebrow">Generated match review</p>
+    <p class="eyebrow">生成レビュー</p>
     <div class="review-heading">
-      <h2>${escapeHtml(review.title_ja || "Generated review")}</h2>
+      <h2>${escapeHtml(review.title_ja || "生成レビュー")}</h2>
       <span class="${reviewStatusClass(review.status)}">${escapeHtml(statusLabel(review.status))}</span>
     </div>
     <p class="review-status-note">${escapeHtml(statusHelp(review.status))}</p>
-    <p>${escapeHtml(review.short_summary_ja || "No short summary yet")}</p>
-    <h3 class="review-subhead">Source coverage</h3>
+    <p>${escapeHtml(review.short_summary_ja || "短い要約はまだありません")}</p>
+    <h3 class="review-subhead">ソースカバレッジ</h3>
     <dl class="metric-list">
       ${metricItems(formatSourceCoverage(review.source_coverage))}
-      <div><dt>Confidence</dt><dd>${escapeHtml(formatPercent(review.confidence))}</dd></div>
-      <div><dt>Version</dt><dd>${escapeHtml(review.generation_version || "TBD")}</dd></div>
-      <div><dt>Generated</dt><dd>${escapeHtml(review.generated_at || "TBD")}</dd></div>
+      <div><dt>信頼度</dt><dd>${escapeHtml(formatPercent(review.confidence))}</dd></div>
+      <div><dt>生成バージョン</dt><dd>${escapeHtml(review.generation_version || "未定")}</dd></div>
+      <div><dt>生成日時</dt><dd>${escapeHtml(review.generated_at || "未定")}</dd></div>
     </dl>
-    <p class="review-status-note">Confidence is a local quality signal based on available structured sources and extraction notes, not a guarantee of correctness.</p>
+    <p class="review-status-note">信頼度は、現在利用できる構造化ソースと抽出メモに基づくローカルな品質目安であり、正確性を保証するものではありません。</p>
     <div class="review-sections">
-      <section><h3>Match flow</h3><p>${escapeHtml(review.match_flow_ja || "No match flow yet")}</p></section>
-      <section><h3>Initial shapes</h3><p>${escapeHtml(review.initial_shapes_ja || "No initial shape notes yet")}</p></section>
-      <section><h3>Key tactical themes</h3><p>${escapeHtml(review.key_tactical_themes_ja || "No tactical themes yet")}</p></section>
-      <section><h3>Turning points</h3><p>${escapeHtml(review.turning_points_ja || "No turning points yet")}</p></section>
-      <section><h3>Source consensus</h3><p>${escapeHtml(review.source_consensus_ja || "No consensus notes yet")}</p></section>
-      <section><h3>Source disagreement</h3><p>${escapeHtml(review.source_disagreement_ja || "No disagreement notes yet")}</p></section>
+      <section><h3>試合の流れ</h3><p>${escapeHtml(review.match_flow_ja || "試合の流れはまだありません")}</p></section>
+      <section><h3>初期配置</h3><p>${escapeHtml(review.initial_shapes_ja || "初期配置メモはまだありません")}</p></section>
+      <section><h3>主な戦術テーマ</h3><p>${escapeHtml(review.key_tactical_themes_ja || "戦術テーマはまだありません")}</p></section>
+      <section><h3>転機</h3><p>${escapeHtml(review.turning_points_ja || "転機はまだありません")}</p></section>
+      <section><h3>ソース間の一致点</h3><p>${escapeHtml(review.source_consensus_ja || "一致点メモはまだありません")}</p></section>
+      <section><h3>ソース間の相違点</h3><p>${escapeHtml(review.source_disagreement_ja || "相違点メモはまだありません")}</p></section>
     </div>
     <section class="missing-inputs">
-      <h3>Missing inputs</h3>
-      <ul class="detail-list">${listItems(review.missing_inputs, "No missing inputs recorded")}</ul>
+      <h3>不足している入力</h3>
+      <ul class="detail-list">${listItems(review.missing_inputs, "不足入力の記録はありません")}</ul>
     </section>
     <details class="review-footnote">
-      <summary>Input record IDs</summary>
-      <p>Source IDs: ${escapeHtml((review.source_ids || []).join(", ") || "none")}</p>
-      <p>Article IDs: ${escapeHtml((review.article_ids || []).join(", ") || "none")}</p>
+      <summary>入力レコードID</summary>
+      <p>Source IDs: ${escapeHtml((review.source_ids || []).join(", ") || "なし")}</p>
+      <p>Article IDs: ${escapeHtml((review.article_ids || []).join(", ") || "なし")}</p>
     </details>
   `;
 }
@@ -257,7 +257,7 @@ function renderMatch(data, id) {
   const match = data.matches.find((item) => item.id === id);
 
   if (!match) {
-    renderFallback(`Match not found: ${id || "missing id"}`);
+    renderFallback(`試合が見つかりません: ${id || "id未指定"}`);
     return;
   }
 
@@ -277,19 +277,19 @@ function renderMatch(data, id) {
     ...(review?.source_ids || [])
   ]);
 
-  document.querySelector("[data-match-group]").textContent = `${match.group || "Group TBD"} / ${match.stage}`;
+  document.querySelector("[data-match-group]").textContent = `${match.group || "グループ未定"} / ${match.stage}`;
   document.querySelector("[data-match-title]").textContent = `${home?.name || match.home_team_id} vs ${away?.name || match.away_team_id}`;
   document.querySelector("[data-match-meta]").textContent = `${formatDate(match.kickoff)} / ${match.venue_id}`;
   document.querySelector("[data-match-status]").textContent = match.status;
   document.querySelector("[data-match-score]").textContent = scoreText(match.score);
   document.querySelector("[data-result-status]").textContent = report?.status || "not_started";
-  document.querySelector("[data-result-headline]").textContent = report?.headline || "No headline yet";
-  document.querySelector("[data-result-summary]").textContent = report?.summary_ja || "No result summary yet";
-  document.querySelector("[data-result-events]").innerHTML = listItems(report?.key_events, "No key events yet");
+  document.querySelector("[data-result-headline]").textContent = report?.headline || "見出しはまだありません";
+  document.querySelector("[data-result-summary]").textContent = report?.summary_ja || "結果サマリーはまだありません";
+  document.querySelector("[data-result-events]").innerHTML = listItems(report?.key_events, "主要イベントはまだありません");
   document.querySelector("[data-review-status]").textContent = review?.status || "not_started";
-  document.querySelector("[data-review-themes]").innerHTML = listItems(review?.themes, "No tactical themes yet");
-  document.querySelector("[data-review-summary]").textContent = review?.summary_ja || "No tactical summary yet";
-  document.querySelector("[data-review-formation]").textContent = review?.formation_notes || "No formation notes yet";
+  document.querySelector("[data-review-themes]").innerHTML = listItems(review?.themes, "戦術テーマはまだありません");
+  document.querySelector("[data-review-summary]").textContent = review?.summary_ja || "戦術サマリーはまだありません";
+  document.querySelector("[data-review-formation]").textContent = review?.formation_notes || "配置メモはまだありません";
   renderGeneratedReview(data, match.id);
   document.querySelector("[data-source-list]").innerHTML = sourceList([...sourceIds], data.sources);
   document.querySelector("[data-update-history]").innerHTML = updateHistoryList(history);
@@ -299,7 +299,7 @@ function renderTeam(data, id) {
   const team = data.teams.find((item) => item.id === id);
 
   if (!team) {
-    renderFallback(`Team not found: ${id || "missing id"}`);
+    renderFallback(`チームが見つかりません: ${id || "id未指定"}`);
     return;
   }
 
@@ -311,7 +311,7 @@ function renderTeam(data, id) {
     (record) => record.target_type === "team" && record.target_id === team.id
   );
 
-  document.querySelector("[data-team-group]").textContent = `Group ${team.group}`;
+  document.querySelector("[data-team-group]").textContent = `グループ ${team.group}`;
   document.querySelector("[data-team-name]").textContent = team.name;
   document.querySelector("[data-team-meta]").textContent = `${team.short_name} / ${team.confederation}`;
   document.querySelector("[data-team-status]").textContent = team.status;
@@ -322,7 +322,7 @@ function renderTeam(data, id) {
       const away = teams.get(match.away_team_id)?.name || match.away_team_id;
       return `<li><a href="match.html?id=${encodeURIComponent(match.id)}">${escapeHtml(home)} vs ${escapeHtml(away)}</a><p>${escapeHtml(formatDate(match.kickoff))} / ${escapeHtml(match.status)}</p></li>`;
     }).join("")
-    : "<li>No related matches yet</li>";
+    : "<li>関連試合はまだありません</li>";
   document.querySelector("[data-source-list]").innerHTML = sourceList(team.source_ids, data.sources);
   document.querySelector("[data-update-history]").innerHTML = updateHistoryList(history);
 }
@@ -343,7 +343,7 @@ async function init() {
       return;
     }
 
-    renderFallback("Unknown detail page");
+    renderFallback("不明な詳細ページです");
   } catch (error) {
     renderError(error);
   }

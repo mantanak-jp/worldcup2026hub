@@ -11,46 +11,46 @@
       <nav class="nav" aria-label="Primary">
         <a class="brand" href="#top">WorldCup2026Hub</a>
         <div class="nav-links">
-          <a href="#matches">Matches</a>
-          <a href="#teams">Teams</a>
-          <a href="#status">Status</a>
+          <a href="#matches">試合</a>
+          <a href="#teams">チーム</a>
+          <a href="#status">更新状況</a>
         </div>
       </nav>
       <section class="hero" id="top">
-        <p class="eyebrow">Source-based review platform preview</p>
-        <h1>WorldCup2026Hub prepares structured 2026 match reviews.</h1>
-        <p class="hero-copy">Public v0.1 uses sample and dry-run data to show the planned pipeline: source metadata, extraction notes, Level 3 tactical claims, and generated Japanese review status.</p>
+        <p class="eyebrow">出典明示型レビュー生成サイト preview</p>
+        <h1>各国ソースを横断して、試合レビューを日本語で整理する。</h1>
+        <p class="hero-copy">Public v0.1 は sample / dry-run data によるプレビューです。戦術レビュー、試合分析、公式情報、現地メディア記事などを出典つきで整理し、独自の日本語レビューとして確認できる形を検証しています。</p>
       </section>
     </header>
 
     <main>
       <section class="section" id="matches" aria-labelledby="matches-title">
         <div class="section-heading">
-          <p class="eyebrow">Schedule</p>
-          <h2 id="matches-title">Match list</h2>
+          <p class="eyebrow">試合</p>
+          <h2 id="matches-title">試合一覧</h2>
         </div>
         <div class="match-grid" data-match-list></div>
       </section>
 
       <section class="section section-muted" id="teams" aria-labelledby="teams-title">
         <div class="section-heading">
-          <p class="eyebrow">Teams</p>
-          <h2 id="teams-title">Team list</h2>
+          <p class="eyebrow">チーム</p>
+          <h2 id="teams-title">チーム一覧</h2>
         </div>
         <div class="team-grid" data-team-list></div>
       </section>
 
       <section class="section" id="status" aria-labelledby="status-title">
         <div class="section-heading">
-          <p class="eyebrow">Workflow</p>
-          <h2 id="status-title">Coverage status</h2>
+          <p class="eyebrow">v0.1 preview</p>
+          <h2 id="status-title">データとレビューの準備状況</h2>
         </div>
         <div class="status-board" data-status-board></div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <p>Public v0.1 preview. No real crawler, source enablement, paid API, external article body storage, or Pages deployment automation is active yet.</p>
+      <p>Public v0.1 preview。現在は sample / dry-run data のみで、実クロール、source enablement、有料API、外部記事本文保存、Pages deploy automation は有効化していません。</p>
     </footer>
 
     <script src="app.js"></script>
