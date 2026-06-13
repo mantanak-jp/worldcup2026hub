@@ -51,12 +51,42 @@ function readText(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), "utf8");
 }
 
-function writeText(relativePath, content) {
-  const filePath = path.join(root, relativePath);
-  const tempPath = `${filePath}.tmp`;
-  JSON.parse(content);
-  fs.writeFileSync(tempPath, content, "utf8");
-  fs.renameSync(tempPath, filePath);
+function removeIfExists(filePath) {
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
+}
+
+function atomicReplaceMany(writes) {
+  const prepared = writes.map(({ relativePath, content }) => {
+    const filePath = path.join(root, relativePath);
+    const tempPath = `${filePath}.${process.pid}.tmp`;
+    const backupPath = `${filePath}.${process.pid}.bak`;
+    JSON.parse(content);
+    fs.writeFileSync(tempPath, content, "utf8");
+    return { relativePath, filePath, tempPath, backupPath };
+  });
+
+  try {
+    for (const item of prepared) {
+      fs.renameSync(item.filePath, item.backupPath);
+    }
+    for (const item of prepared) {
+      fs.renameSync(item.tempPath, item.filePath);
+    }
+    for (const item of prepared) {
+      removeIfExists(item.backupPath);
+    }
+  } catch (error) {
+    for (const item of prepared) {
+      if (fs.existsSync(item.backupPath)) {
+        removeIfExists(item.filePath);
+        fs.renameSync(item.backupPath, item.filePath);
+      }
+      removeIfExists(item.tempPath);
+    }
+    throw error;
+  }
 }
 
 function runNode(args) {
@@ -82,10 +112,10 @@ function stageSummary(stage, result, extra = {}) {
   };
 }
 
-function failSummary(stage, result, reason, stages) {
+function failSummary(stage, result, reason, stages, mode = "check-only") {
   return {
     ok: false,
-    mode: "check-only",
+    mode,
     failed_stage: stage.id,
     reason,
     stages: [
@@ -105,39 +135,145 @@ function compareSavedOutput(stage, generatedOutput) {
   return saved === generatedOutput;
 }
 
+function compareDeterministicOutputs(firstOutput, secondOutput) {
+  return {
+    ok: firstOutput === secondOutput,
+    reason: firstOutput === secondOutput ? "" : "generator output is nondeterministic"
+  };
+}
+
+function resultFromErrors(errors) {
+  return {
+    status: errors.length === 0 ? 0 : 1,
+    stdout: stableStringify({ validation_error_count: errors.length, errors }),
+    stderr: ""
+  };
+}
+
+function buildTentativeContext(context, patch) {
+  const next = withContext(context, patch);
+  next.matches = context.matches;
+  next.teams = context.teams;
+  next.articles = context.articles;
+  next.extractions = context.extractions;
+  next.sources = context.sources;
+  next.sourceRegistry = context.sourceRegistry;
+  next.matchMap = context.matchMap;
+  next.teamMap = context.teamMap;
+  next.articleMap = context.articleMap;
+  next.extractionMap = context.extractionMap;
+  next.sourceMap = context.sourceMap;
+  next.sourceRegistryMap = context.sourceRegistryMap;
+  next.matchIds = context.matchIds;
+  next.claimIds = context.claimIds;
+  return next;
+}
+
+function validateTentativeOutlines(context) {
+  return validateOutlinesAgainstExpected(context);
+}
+
+function validateTentativeGeneratedReviews(context) {
+  return validateGeneratedAgainstExpected(context);
+}
+
 function runPipeline(options = {}) {
   const write = Boolean(options.write);
+  const mode = write ? "write" : "check-only";
+  const simulateFailureStage = options.simulateFailureStage || "";
   const stages = [];
+  const pendingWrites = new Map();
+  let tentativeContext = buildContext();
 
   for (const stage of STAGES) {
-    const first = runNode(stage.args);
+    let first = runNode(stage.args);
+    let generatedByMemory = false;
+    let secondOutput = "";
+
+    if (write && stage.id === "review_outlines" && pendingWrites.has("data/review_outlines.json")) {
+      const errors = validateTentativeOutlines(tentativeContext);
+      first = resultFromErrors(errors);
+    }
+    if (write && stage.id === "generated_review_generation" && pendingWrites.has("data/review_outlines.json")) {
+      const firstOutput = stableStringify(buildGeneratedReviews(tentativeContext));
+      secondOutput = stableStringify(buildGeneratedReviews(tentativeContext));
+      first = { status: 0, stdout: firstOutput, stderr: "" };
+      generatedByMemory = true;
+    }
+    if (write && stage.id === "generated_match_reviews" && pendingWrites.has("data/generated_match_reviews.json")) {
+      const errors = validateTentativeGeneratedReviews(tentativeContext);
+      first = resultFromErrors(errors);
+    }
+
     if (first.status !== 0) {
-      return failSummary(stage, first, "stage command failed", stages);
+      return failSummary(stage, first, "stage command failed", stages, mode);
     }
 
     const extra = {};
     if (stage.outputPath) {
-      const second = runNode(stage.args);
+      const second = generatedByMemory
+        ? { status: 0, stdout: secondOutput, stderr: "" }
+        : runNode(stage.args);
       if (second.status !== 0) {
-        return failSummary(stage, second, "second deterministic run failed", stages);
+        return failSummary(stage, second, "second deterministic run failed", stages, mode);
       }
-      if (first.stdout !== second.stdout) {
-        return failSummary(stage, first, "generator output is nondeterministic", stages);
+      const deterministic = compareDeterministicOutputs(first.stdout, second.stdout);
+      if (!deterministic.ok) {
+        return failSummary(stage, first, deterministic.reason, stages, mode);
       }
       extra.deterministic_output = true;
 
-      JSON.parse(first.stdout);
+      const parsedOutput = JSON.parse(first.stdout);
       if (write) {
-        writeText(stage.outputPath, first.stdout);
-        extra.wrote = stage.outputPath;
+        pendingWrites.set(stage.outputPath, first.stdout);
+        extra.pending_write = stage.outputPath;
+        if (stage.outputPath === "data/review_outlines.json") {
+          tentativeContext = buildTentativeContext(tentativeContext, { outlines: parsedOutput });
+        }
+        if (stage.outputPath === "data/generated_match_reviews.json") {
+          tentativeContext = buildTentativeContext(tentativeContext, { generatedReviews: parsedOutput });
+        }
       } else if (!compareSavedOutput(stage, first.stdout)) {
-        return failSummary(stage, first, `${stage.outputPath} does not match deterministic generator output`, stages);
+        return failSummary(stage, first, `${stage.outputPath} does not match deterministic generator output`, stages, mode);
       } else {
         extra.matches_saved_output = true;
       }
     }
 
     stages.push(stageSummary(stage, first, extra));
+
+    if (simulateFailureStage === stage.id) {
+      return failSummary(stage, { status: 1, stdout: "", stderr: "" }, "simulated write-mode failure", stages, mode);
+    }
+  }
+
+  if (write) {
+    try {
+      atomicReplaceMany([
+        {
+          relativePath: "data/review_outlines.json",
+          content: pendingWrites.get("data/review_outlines.json")
+        },
+        {
+          relativePath: "data/generated_match_reviews.json",
+          content: pendingWrites.get("data/generated_match_reviews.json")
+        }
+      ]);
+      for (const stage of stages) {
+        if (stage.pending_write) {
+          stage.wrote = stage.pending_write;
+          delete stage.pending_write;
+        }
+      }
+    } catch (error) {
+      return failSummary(
+        { id: "atomic_replace", label: "atomic replace", args: ["tools/run_local_level3_pipeline.js", "--write"] },
+        { status: 1, stdout: "", stderr: error.message },
+        "atomic replace failed",
+        stages,
+        mode
+      );
+    }
   }
 
   const context = buildContext();
@@ -263,6 +399,19 @@ function expectNegative(name, mutate, validate) {
 }
 
 function runNegativeSelfTest() {
+  const generatedOutput = stableStringify(buildGeneratedReviews(buildContext()));
+  const matchingOutputComparison = compareDeterministicOutputs(generatedOutput, generatedOutput);
+  const changedOutputComparison = compareDeterministicOutputs(generatedOutput, `${generatedOutput}x`);
+  const beforeWriteFailure = {
+    outlines: readText("data/review_outlines.json"),
+    reviews: readText("data/generated_match_reviews.json")
+  };
+  const writeFailure = runPipeline({ write: true, simulateFailureStage: "generated_match_reviews" });
+  const afterWriteFailure = {
+    outlines: readText("data/review_outlines.json"),
+    reviews: readText("data/generated_match_reviews.json")
+  };
+
   const cases = [
     expectNegative("invalid article ref", (context) => {
       context.extractions[0].article_id = "missing-article";
@@ -295,16 +444,37 @@ function runNegativeSelfTest() {
     expectNegative("prohibited content field", (context) => {
       context.generatedReviews[0].full_text = "not allowed";
       return { generatedReviews: context.generatedReviews };
-    }, validateGeneratedAgainstExpected)
+    }, validateGeneratedAgainstExpected),
+    {
+      name: "deterministic output comparison accepts matching outputs",
+      passed: matchingOutputComparison.ok,
+      detected: "matching outputs are accepted"
+    },
+    {
+      name: "nondeterministic output comparison detects changed output",
+      passed: !changedOutputComparison.ok && changedOutputComparison.reason === "generator output is nondeterministic",
+      detected: changedOutputComparison.reason
+    },
+    {
+      name: "write mode failure preserves review_outlines.json",
+      passed: !writeFailure.ok && writeFailure.mode === "write" && beforeWriteFailure.outlines === afterWriteFailure.outlines,
+      detected: writeFailure.reason || ""
+    },
+    {
+      name: "write mode failure preserves generated_match_reviews.json",
+      passed: !writeFailure.ok && writeFailure.mode === "write" && beforeWriteFailure.reviews === afterWriteFailure.reviews,
+      detected: writeFailure.reason || ""
+    },
+    {
+      name: "write mode failure prevents partial write",
+      passed:
+        !writeFailure.ok &&
+        writeFailure.mode === "write" &&
+        beforeWriteFailure.outlines === afterWriteFailure.outlines &&
+        beforeWriteFailure.reviews === afterWriteFailure.reviews,
+      detected: writeFailure.reason || ""
+    }
   ];
-
-  const deterministic = stableStringify(buildGeneratedReviews(buildContext()));
-  const nondeterministicDetection = {
-    name: "nondeterministic input/output detection",
-    passed: deterministic !== `${deterministic}x`,
-    detected: "stable output comparison rejects changed output"
-  };
-  cases.push(nondeterministicDetection);
 
   const failed = cases.filter((test) => !test.passed);
   return {
