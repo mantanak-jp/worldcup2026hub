@@ -18,13 +18,15 @@ Match-window crawling should increase focus around each match:
 
 The crawler should combine:
 
-- Source registry
+- Source registry records that satisfy the operational gate
 - RSS feeds
 - Sitemaps
 - Site search
 - Search queries
 - Approved APIs when explicitly approved
 - Custom fetchers for approved sources only
+
+`data/source_candidates.json` is not crawler input. Candidate records are research and policy-review records only. The crawler trust boundary starts at `data/source_registry.json`, and only records with active approval, `runtime_status=enabled`, compatibility `enabled=true`, complete policy evidence, and an approved crawl method may be used by scheduled crawling.
 
 ## Pipeline Steps
 
@@ -79,3 +81,5 @@ In the current scaffold, crawl run records are samples only. They must not imply
 Minimum fields include `id`, `run_type`, `status`, `trigger`, `started_at`, `completed_at`, `source_ids`, `discovered_article_count`, `stored_article_count`, `extraction_count`, `error_count`, `policy_blocked_count`, and `notes`.
 
 Source targets must remain `enabled=false` until user approval. Dry-run records must not call external APIs, use paid APIs, store full text, store external images, or execute a real crawler.
+
+`tools/validate_source_contracts.js` runs before article/extraction validation in the local Level 3 pipeline. If source contracts are invalid, later crawler or review-generation checks must not run.

@@ -373,3 +373,19 @@ Recommended decisions for Step 11-D:
 - start every promoted source disabled
 - make policy evidence and audit transitions structured
 - prohibit candidate records from crawler execution and approved-coverage calculations
+
+## 15. Step 11 Contract Validator
+
+The first implementation PR for this design introduces the static source contract validator:
+
+```text
+tools/validate_source_contracts.js
+```
+
+It validates `data/source_candidates.json` for candidate and fixture records, and `data/source_registry.json` for approved operational records. Candidate records use `candidate_status` and policy research fields, but must not carry runtime enablement fields such as `runtime_status`, `enabled`, or crawler activation state.
+
+Registry records use `approval_status`, `runtime_status`, compatibility `enabled`, reviewed policy fields, policy evidence, approved crawl method, and storage/cost guardrails. Promotion preserves the source ID, but the same ID must not exist in both datasets at the same time.
+
+During the current migration window, the validator tolerates the six existing disabled legacy records in `data/source_registry.json` only as pending-migration compatibility records. They are not approved operational sources, must remain `enabled=false`, must keep `crawl_method=disabled`, and must not count as approved source coverage.
+
+The validator is local-only. It does not crawl, call external APIs, use paid APIs, read secrets, approve sources, promote sources, or enable crawling.

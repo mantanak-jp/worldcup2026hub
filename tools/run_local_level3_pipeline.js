@@ -14,6 +14,11 @@ const root = path.resolve(__dirname, "..");
 
 const STAGES = [
   {
+    id: "source_contracts",
+    label: "source candidate / registry contract validation",
+    args: ["tools/validate_source_contracts.js"]
+  },
+  {
     id: "article_extractions",
     label: "article / extraction validation",
     args: ["tools/normalize_article_extractions.js"]
@@ -132,7 +137,7 @@ function failSummary(stage, result, reason, stages, mode = "check-only") {
 
 function compareSavedOutput(stage, generatedOutput) {
   const saved = readText(stage.outputPath);
-  return saved === generatedOutput;
+  return stableStringify(JSON.parse(saved)) === stableStringify(JSON.parse(generatedOutput));
 }
 
 function compareDeterministicOutputs(firstOutput, secondOutput) {

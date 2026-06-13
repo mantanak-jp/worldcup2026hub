@@ -29,22 +29,25 @@ node tools/run_local_level3_pipeline.js --check-only
 
 ## Stages
 
-1. `tools/normalize_article_extractions.js`
+1. `tools/validate_source_contracts.js`
+   - Input: `data/source_candidates.json`, `data/source_registry.json`.
+   - Output: validation summary only.
+2. `tools/normalize_article_extractions.js`
    - Input: `data/articles.json`, `data/article_extractions.json`, source/match/team refs.
    - Output: validation summary only.
-2. `tools/normalize_tactical_claims.js`
+3. `tools/normalize_tactical_claims.js`
    - Input: `data/tactical_claims.json` and extraction/article/source refs.
    - Output: validation summary only.
-3. `tools/generate_review_outline_sample.js`
+4. `tools/generate_review_outline_sample.js`
    - Input: validated tactical claims.
    - Output: deterministic review outline JSON.
-4. `tools/normalize_review_outlines.js`
+5. `tools/normalize_review_outlines.js`
    - Input: saved `data/review_outlines.json`.
    - Output: validation summary only.
-5. `tools/generate_structured_review_sample.js`
+6. `tools/generate_structured_review_sample.js`
    - Input: saved review outlines.
    - Output: deterministic generated Japanese review JSON.
-6. `tools/normalize_generated_match_reviews.js`
+7. `tools/normalize_generated_match_reviews.js`
    - Input: saved `data/generated_match_reviews.json`.
    - Output: validation summary only.
 
@@ -52,6 +55,7 @@ node tools/run_local_level3_pipeline.js --check-only
 
 The pipeline stops and exits non-zero when any of these conditions occur:
 
+- Invalid source candidate or source registry contract.
 - Invalid article or extraction contract.
 - Invalid tactical claim contract.
 - Ungrounded claim.
