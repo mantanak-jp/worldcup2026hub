@@ -50,6 +50,7 @@ Public v0.1 copy and UI labels are primarily Japanese for readers, while technic
 - [Project Overview](docs/overview.md)
 - [Operations Notes](docs/operations.md)
 - [Site Concept](docs/site_concept.md)
+- [Product Requirements](docs/product_requirements.md)
 - [Source Registry Specification](docs/source_registry_spec.md)
 - [Crawler Pipeline Specification](docs/crawler_pipeline_spec.md)
 - [Review Generation Specification](docs/review_generation_spec.md)
