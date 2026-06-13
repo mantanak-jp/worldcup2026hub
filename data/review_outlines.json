@@ -2,27 +2,221 @@
   {
     "id": "outline-match-001-sample",
     "match_id": "match-001",
-    "status": "insufficient_sources",
-    "section_claims": {
-      "match_flow": ["claim-match-001-transition-sample"],
-      "initial_shapes": [],
-      "key_tactical_themes": ["claim-match-001-pressing-sample", "claim-match-001-transition-sample"],
-      "turning_points": [],
-      "key_players": [],
-      "substitutions_and_adjustments": [],
-      "source_consensus": ["claim-match-001-transition-sample"],
-      "source_disagreement": ["claim-match-001-pressing-sample", "claim-match-001-pressing-disagreement-sample"],
-      "next_match_implications": []
-    },
+    "claim_ids": [
+      "claim-match-001-pressing-disagreement-sample",
+      "claim-match-001-pressing-sample",
+      "claim-match-001-transition-sample"
+    ],
+    "section_order": [
+      "match_flow",
+      "initial_shapes",
+      "in_possession",
+      "out_of_possession",
+      "transitions",
+      "adjustments",
+      "substitutions",
+      "turning_points",
+      "key_players",
+      "source_consensus",
+      "source_disagreement",
+      "limitations"
+    ],
+    "match_flow_claim_ids": [],
+    "initial_shape_claim_ids": [],
+    "in_possession_claim_ids": [],
+    "out_of_possession_claim_ids": [],
+    "transition_claim_ids": [
+      "claim-match-001-transition-sample"
+    ],
+    "adjustment_claim_ids": [],
+    "substitution_claim_ids": [],
+    "turning_point_claim_ids": [],
+    "key_player_claim_ids": [],
+    "consensus_claim_ids": [],
+    "disagreement_claim_ids": [
+      "claim-match-001-pressing-disagreement-sample",
+      "claim-match-001-pressing-sample"
+    ],
+    "missing_inputs": [
+      "approved long-form source",
+      "approved source policy",
+      "approved statistics source",
+      "article-level event evidence",
+      "event data",
+      "independent second source",
+      "sufficient independent sources"
+    ],
     "source_coverage": {
       "source_count": 3,
       "article_count": 3,
-      "languages": ["en", "ja"],
+      "extraction_count": 3,
+      "languages": [
+        "en",
+        "ja"
+      ],
+      "source_types": [
+        "longform_analysis",
+        "statistics",
+        "tactical_analysis"
+      ],
+      "approved_source_policy_count": 0,
+      "metadata_only_evidence": true,
       "coverage_level": "insufficient_sources"
     },
-    "confidence": 0.21,
-    "missing_inputs": ["approved source policies", "post-match event data", "disagreement review"],
-    "generated_at": "2026-06-12T00:00:00+09:00",
-    "generation_version": "level3-outline-v0"
+    "confidence": 0.42,
+    "confidence_factors": {
+      "included_claim_count": 3,
+      "average_claim_confidence": 0.21,
+      "source_count": 3,
+      "article_count": 3,
+      "extraction_count": 3,
+      "language_count": 2,
+      "source_type_count": 3,
+      "approved_source_policy_count": 0,
+      "disagreement_count": 2,
+      "missing_input_count": 6,
+      "low_confidence_claim_count": 3,
+      "blocked_or_excluded_claim_count": 0
+    },
+    "uncertainty": [
+      "needs_event_data",
+      "sample_disagreement_requires_review",
+      "single_source_unapproved_policy_with_opposing_sample"
+    ],
+    "status": "insufficient_sources",
+    "generation_version": "level3-outline-review-v1",
+    "generation_stability_key": "outline-match-001:level3-outline-review-v1",
+    "created_at": "2026-06-13T00:00:00Z",
+    "updated_at": "2026-06-13T00:00:00Z"
+  },
+  {
+    "id": "outline-match-002-sample",
+    "match_id": "match-002",
+    "claim_ids": [],
+    "section_order": [
+      "match_flow",
+      "initial_shapes",
+      "in_possession",
+      "out_of_possession",
+      "transitions",
+      "adjustments",
+      "substitutions",
+      "turning_points",
+      "key_players",
+      "source_consensus",
+      "source_disagreement",
+      "limitations"
+    ],
+    "match_flow_claim_ids": [],
+    "initial_shape_claim_ids": [],
+    "in_possession_claim_ids": [],
+    "out_of_possession_claim_ids": [],
+    "transition_claim_ids": [],
+    "adjustment_claim_ids": [],
+    "substitution_claim_ids": [],
+    "turning_point_claim_ids": [],
+    "key_player_claim_ids": [],
+    "consensus_claim_ids": [],
+    "disagreement_claim_ids": [],
+    "missing_inputs": [
+      "approved source policy",
+      "sufficient independent sources"
+    ],
+    "source_coverage": {
+      "source_count": 0,
+      "article_count": 0,
+      "extraction_count": 0,
+      "languages": [],
+      "source_types": [],
+      "approved_source_policy_count": 0,
+      "metadata_only_evidence": false,
+      "coverage_level": "insufficient_sources"
+    },
+    "confidence": 0,
+    "confidence_factors": {
+      "included_claim_count": 0,
+      "average_claim_confidence": 0,
+      "source_count": 0,
+      "article_count": 0,
+      "extraction_count": 0,
+      "language_count": 0,
+      "source_type_count": 0,
+      "approved_source_policy_count": 0,
+      "disagreement_count": 0,
+      "missing_input_count": 0,
+      "low_confidence_claim_count": 0,
+      "blocked_or_excluded_claim_count": 0
+    },
+    "uncertainty": [],
+    "status": "blocked",
+    "generation_version": "level3-outline-review-v1",
+    "generation_stability_key": "outline-match-002:level3-outline-review-v1",
+    "created_at": "2026-06-13T00:00:00Z",
+    "updated_at": "2026-06-13T00:00:00Z"
+  },
+  {
+    "id": "outline-match-003-sample",
+    "match_id": "match-003",
+    "claim_ids": [],
+    "section_order": [
+      "match_flow",
+      "initial_shapes",
+      "in_possession",
+      "out_of_possession",
+      "transitions",
+      "adjustments",
+      "substitutions",
+      "turning_points",
+      "key_players",
+      "source_consensus",
+      "source_disagreement",
+      "limitations"
+    ],
+    "match_flow_claim_ids": [],
+    "initial_shape_claim_ids": [],
+    "in_possession_claim_ids": [],
+    "out_of_possession_claim_ids": [],
+    "transition_claim_ids": [],
+    "adjustment_claim_ids": [],
+    "substitution_claim_ids": [],
+    "turning_point_claim_ids": [],
+    "key_player_claim_ids": [],
+    "consensus_claim_ids": [],
+    "disagreement_claim_ids": [],
+    "missing_inputs": [
+      "approved source policy",
+      "sufficient independent sources"
+    ],
+    "source_coverage": {
+      "source_count": 0,
+      "article_count": 0,
+      "extraction_count": 0,
+      "languages": [],
+      "source_types": [],
+      "approved_source_policy_count": 0,
+      "metadata_only_evidence": false,
+      "coverage_level": "insufficient_sources"
+    },
+    "confidence": 0,
+    "confidence_factors": {
+      "included_claim_count": 0,
+      "average_claim_confidence": 0,
+      "source_count": 0,
+      "article_count": 0,
+      "extraction_count": 0,
+      "language_count": 0,
+      "source_type_count": 0,
+      "approved_source_policy_count": 0,
+      "disagreement_count": 0,
+      "missing_input_count": 0,
+      "low_confidence_claim_count": 0,
+      "blocked_or_excluded_claim_count": 0
+    },
+    "uncertainty": [],
+    "status": "blocked",
+    "generation_version": "level3-outline-review-v1",
+    "generation_stability_key": "outline-match-003:level3-outline-review-v1",
+    "created_at": "2026-06-13T00:00:00Z",
+    "updated_at": "2026-06-13T00:00:00Z"
   }
 ]
