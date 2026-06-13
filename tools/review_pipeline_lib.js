@@ -557,7 +557,7 @@ function buildGeneratedReview(outline, context) {
     missing_inputs: outline.missing_inputs,
     uncertainty: outline.uncertainty,
     disagreement_summary_ja: hasDisagreement
-      ? "ソース間で評価が分かれるclaimがあるため、相違点を独立した節に分けて扱う。"
+      ? "ソース間で評価が分かれるclaimがあります。対立する見方を分けて扱い、どちらかを正解として断定しません。"
       : "",
     source_ids: refs.sourceIds,
     article_ids: refs.articleIds,

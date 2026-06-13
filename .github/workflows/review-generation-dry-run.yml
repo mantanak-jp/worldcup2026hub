@@ -38,6 +38,12 @@ jobs:
           if [ -f tools/normalize_review_outlines.js ]; then
             node --check tools/normalize_review_outlines.js
           fi
+          if [ -f tools/normalize_generated_match_reviews.js ]; then
+            node --check tools/normalize_generated_match_reviews.js
+          fi
+          if [ -f tools/run_local_level3_pipeline.js ]; then
+            node --check tools/run_local_level3_pipeline.js
+          fi
           if [ -f tools/review_pipeline_lib.js ]; then
             node --check tools/review_pipeline_lib.js
           fi
@@ -67,6 +73,13 @@ jobs:
           if [ -f tools/normalize_review_outlines.js ]; then
             node tools/normalize_review_outlines.js
           fi
-          if [ ! -f tools/generate_match_review_sample.js ] && [ ! -f tools/generate_structured_review_sample.js ] && [ ! -f tools/generate_review_outline_sample.js ] && [ ! -f tools/normalize_article_extractions.js ] && [ ! -f tools/normalize_tactical_claims.js ] && [ ! -f tools/normalize_review_outlines.js ]; then
+          if [ -f tools/normalize_generated_match_reviews.js ]; then
+            node tools/normalize_generated_match_reviews.js
+          fi
+          if [ -f tools/run_local_level3_pipeline.js ]; then
+            node tools/run_local_level3_pipeline.js --check-only
+            node tools/run_local_level3_pipeline.js --self-test-negative
+          fi
+          if [ ! -f tools/generate_match_review_sample.js ] && [ ! -f tools/generate_structured_review_sample.js ] && [ ! -f tools/generate_review_outline_sample.js ] && [ ! -f tools/normalize_article_extractions.js ] && [ ! -f tools/normalize_tactical_claims.js ] && [ ! -f tools/normalize_review_outlines.js ] && [ ! -f tools/normalize_generated_match_reviews.js ] && [ ! -f tools/run_local_level3_pipeline.js ]; then
             echo "No local generator or normalizer script is present yet; JSON and syntax checks completed."
           fi
