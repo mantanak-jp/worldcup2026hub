@@ -8,7 +8,11 @@ Automatic collection, automatic generation, and automatic publishing are the tar
 
 Public v0.1 is a preview of that model using sample and dry-run data only.
 
-Published URL: TODO after the user approves initial GitHub Pages settings.
+Published URL: https://mantanak-jp.github.io/worldcup2026hub/
+
+WorldCup2026Hub lets readers check Japanese reviews organized from tactical reviews, match analysis, local media reports, official information, and other source categories without visiting every country-specific site one by one.
+
+It is not an external article reposting site or a translated-article roundup. The site shows source metadata and links so readers can verify the original sources when needed, while the generated review itself is intended to be an original Japanese review.
 
 ## Goals
 
@@ -38,6 +42,8 @@ Published URL: TODO after the user approves initial GitHub Pages settings.
 This repository currently contains a plain static MVP and planning documents for the automated review platform. Crawler implementation, scheduled workflows, and Pages deployment automation are intentionally staged for later PRs.
 
 The current public-readiness target is honest preview content: source targets remain disabled, real crawling has not started, paid APIs are not used, and generated reviews are sample outputs with visible confidence and source coverage.
+
+Public v0.1 copy and UI labels are primarily Japanese for readers, while technical docs and data field names may remain English.
 
 ## Documentation
 

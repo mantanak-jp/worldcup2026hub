@@ -1,6 +1,6 @@
 # v0.1 Release Checklist
 
-Use this checklist before enabling initial GitHub Pages publication for WorldCup2026Hub.
+Use this checklist before and after initial GitHub Pages publication for WorldCup2026Hub.
 
 ## Repository State
 
@@ -43,6 +43,6 @@ Use this checklist before enabling initial GitHub Pages publication for WorldCup
 ## Publication Steps
 
 - User confirms initial GitHub Pages publication settings.
-- Pages URL is verified after publication.
+- Pages URL is verified after publication: `https://mantanak-jp.github.io/worldcup2026hub/`.
 - README `Published URL` is updated after the URL is known.
 - Any future Pages deployment automation remains PR-based until the publishing path is approved.
