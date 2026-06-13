@@ -25,6 +25,94 @@ article_extractions
 
 Article extractions are optional in local dry-runs until the scaffold lands, but when present they should improve article counts, language coverage, missing-input reporting, and claim linkage validation.
 
+## Tactical Claim Contract
+
+`data/tactical_claims.json` is the source-grounded claim layer between short extraction notes and review outlines.
+
+Each tactical claim must include:
+
+- `id`
+- `match_id`
+- `team_ids`
+- `claim_type`
+- `tactical_phase`
+- `tactical_theme`
+- `claim_text_ja`
+- `supporting_extraction_ids`
+- `supporting_article_ids`
+- `supporting_source_ids`
+- `opposing_extraction_ids`
+- `opposing_article_ids`
+- `opposing_source_ids`
+- `confidence`
+- `confidence_factors`
+- `uncertainty`
+- `disagreement_status`
+- `missing_inputs`
+- `duplicate_key`
+- `generation_stability_key`
+- `created_at`
+- `updated_at`
+- `status`
+
+Claims must be grounded in at least one supporting extraction, article, and source. Claims without source, article, or extraction support are invalid.
+
+`supporting_article_ids` and `supporting_source_ids` are derived from `supporting_extraction_ids` and must not include unrelated records. `opposing_article_ids` and `opposing_source_ids` are derived from `opposing_extraction_ids` or from opposing refs carried by supporting extractions. Supporting refs and opposing refs must remain separate so a disputed point is not rendered as consensus.
+
+## Confidence Rules
+
+Claim confidence is a local quality signal, not a guarantee of correctness. It should consider:
+
+- Supporting source count
+- Supporting article count
+- Language diversity
+- Source type diversity
+- Approved or unapproved source policy
+- Opposing evidence
+- Average extraction confidence
+- Metadata-only evidence
+- Missing input count
+
+Low-confidence sample claims may remain visible if status, uncertainty, source coverage, and missing inputs are explicit.
+
+The local deterministic formula starts from `0.15`, then applies:
+
+- `+0.08` for each supporting source, capped at 3 sources
+- `+0.06` for each supporting article, capped at 3 articles
+- `+0.05` for each supporting extraction, capped at 3 extractions
+- `+0.03` for each supporting language, capped at 3 languages
+- `+0.03` for each source type, capped at 3 source types
+- `+0.08` if at least one supporting source has an approved or metadata-link-only source policy
+- `-0.05` if no supporting source has that policy state
+- `+0.20 * average supporting extraction confidence`
+- `-0.08` for metadata-only evidence
+- `-0.03` for each missing input, capped at 5 inputs
+- `-0.08` when opposing evidence exists
+
+The value is clamped to `0..1` and rounded to two decimals. `confidence_factors` must match the deterministic factors used for the calculation.
+
+## Duplicate And Disagreement Handling
+
+Claim normalization detects duplicates using a deterministic key:
+
+```text
+match_id|sorted team_ids|tactical_phase|tactical_theme|normalized claim_text_ja
+```
+
+The text normalization uses NFKC normalization, lower-casing, whitespace collapse, and punctuation removal. The stored `duplicate_key` must equal the computed key.
+
+If a claim has opposing evidence, keep `opposing_*` references and set `disagreement_status` instead of presenting one side as settled. Do not infer consensus from thin source support.
+
+## Compatibility
+
+Older sample records used `team_id`, `phase`, `topic`, and `claim_ja`. New sample data should use `team_ids`, `tactical_phase`, `tactical_theme`, and `claim_text_ja`. Existing local generators keep read-only fallback support for `claim_ja` so older generated review fixtures do not break, but new claim records should not use legacy fields.
+
+## Local Claim Normalizer
+
+`tools/normalize_tactical_claims.js` validates tactical claims locally. It checks JSON root shape, required fields, allowed values, duplicate IDs, deterministic duplicate keys, confidence range, deterministic confidence factors, extraction/article/source consistency, match/team references, unsupported or ungrounded claims, prohibited content-like fields, and concise claim text length. It does not write files, access the network, run a crawler, call external APIs, or generate new unsupported claims.
+
+The script exits non-zero on validation errors and prints a deterministic JSON summary. `--self-test-negative` runs local negative fixtures for duplicate IDs, missing extraction refs, missing source refs, ungrounded claims, confidence range failures, and prohibited content fields.
+
 ## Review Requirements
 
 - Claims must link to supporting source IDs and article IDs when available.

@@ -36,7 +36,7 @@ function main() {
   const matchExtractions = extractions.filter((item) => item.match_id === match.id);
   const tacticalThemeIds = outline?.section_claims?.key_tactical_themes || [];
   const tacticalThemes = tacticalThemeIds
-    .map((id) => claimMap.get(id)?.claim_ja)
+    .map((id) => claimMap.get(id)?.claim_text_ja || claimMap.get(id)?.claim_ja)
     .filter(Boolean);
   const extractionNotes = matchExtractions.map((item) => item.short_notes_ja).filter(Boolean);
 
@@ -56,6 +56,7 @@ function main() {
     confidence: outline?.confidence ?? 0,
     missing_inputs: unique([
       ...(outline?.missing_inputs || []),
+      ...tacticalThemeIds.flatMap((id) => claimMap.get(id)?.missing_inputs || []),
       ...matchExtractions.flatMap((item) => item.missing_inputs || []),
       ...(matchExtractions.length === 0 ? ["article extractions"] : [])
     ]),

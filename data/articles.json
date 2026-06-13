@@ -82,5 +82,33 @@
     "url_hash": "sample-url-stats-match-001",
     "generation_stability_key": "article-match-001-stats-sample:v1",
     "notes": "Candidate statistics metadata sample. Not a real crawl result."
+  },
+  {
+    "id": "article-match-001-longform-sample",
+    "source_id": "candidate-longform-analysis",
+    "url": "https://example.com/longform/match-001",
+    "canonical_url": "https://example.com/longform/match-001",
+    "title": "Long-form analysis candidate metadata sample",
+    "language": "en",
+    "source_category": ["longform_analysis"],
+    "article_type": "longform_analysis",
+    "related_match_ids": ["match-001"],
+    "related_team_ids": ["team-canada"],
+    "author_names": ["Sample analyst"],
+    "publisher_name": "Candidate long-form source",
+    "published_at": null,
+    "discovered_at": "2026-06-12T00:00:00Z",
+    "checked_at": "2026-06-12T00:00:00Z",
+    "updated_at": "2026-06-13T00:00:00Z",
+    "extraction_status": "sample_unapproved_source",
+    "content_storage_policy": "manual-review-needed",
+    "full_text_stored": false,
+    "policy_review_status": "manual-review-needed",
+    "discovered_by": "manual_sample",
+    "duplicate_key": "candidate-longform-analysis|https://example.com/longform/match-001|match-001",
+    "headline_hash": "sample-longform-match-001",
+    "url_hash": "sample-url-longform-match-001",
+    "generation_stability_key": "article-match-001-longform-sample:v1",
+    "notes": "Candidate-only disagreement sample. No article body, long quote, image, or crawler output is stored."
   }
 ]

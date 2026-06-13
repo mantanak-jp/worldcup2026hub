@@ -85,7 +85,7 @@ function buildReview(match, teams, claims, outline, articleExtractions, articleM
   const publishable = sourceCoverage.coverage_level !== "insufficient_sources" && confidence >= 0.6;
   const home = teamName(teams, match.home_team_id);
   const away = teamName(teams, match.away_team_id);
-  const claimTexts = tacticalClaims.map((claim) => claim.claim_ja).filter(Boolean);
+  const claimTexts = tacticalClaims.map((claim) => claim.claim_text_ja || claim.claim_ja).filter(Boolean);
   const extractionNotes = articleExtractions.map((extraction) => extraction.short_notes_ja).filter(Boolean);
   const articleIds = unique([
     ...tacticalClaims.flatMap((claim) => claim.supporting_article_ids || []),
@@ -97,6 +97,7 @@ function buildReview(match, teams, claims, outline, articleExtractions, articleM
   ]);
   const missingInputs = unique([
     ...(outline?.missing_inputs || []),
+    ...tacticalClaims.flatMap((claim) => claim.missing_inputs || []),
     ...articleExtractions.flatMap((extraction) => extraction.missing_inputs || []),
     ...(tacticalClaims.length === 0 ? ["tactical claims"] : []),
     ...(articleExtractions.length === 0 ? ["article extractions"] : [])
