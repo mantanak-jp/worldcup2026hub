@@ -54,6 +54,8 @@ Public v0.1 copy and UI labels are primarily Japanese for readers, while technic
 - [Source Registry Specification](docs/source_registry_spec.md)
 - [Crawler Pipeline Specification](docs/crawler_pipeline_spec.md)
 - [Review Generation Specification](docs/review_generation_spec.md)
+- [Local Level 3 Pipeline](docs/local_level3_pipeline.md)
+- [Wave 3 Completion Record](docs/wave3_completion_record.md)
 - [Article Extraction Specification](docs/article_extraction_spec.md)
 - [Publishing Automation Specification](docs/publishing_automation_spec.md)
 - [Data Model](docs/data_model.md)
@@ -74,4 +76,15 @@ The current site shell is plain HTML, CSS, JavaScript, and JSON so it can run di
 - `data/crawl_runs.json`: planned and dry-run crawler run history scaffold; no real crawling is enabled.
 - `tools/generate_match_review_sample.js`: local-only deterministic review generation dry-run with no external API or network access.
 - `tools/normalize_article_extractions.js`: local-only extraction reference validator with graceful fallback when article scaffold files are absent.
+- `tools/run_local_level3_pipeline.js`: one-command local Level 3 quality gate from article extraction validation through generated review validation.
 - Automation scaffold JSON files define future source registry and generated review records without enabling crawler targets.
+
+## Local Level 3 Pipeline
+
+Run the complete local dry-run gate with:
+
+```powershell
+node tools/run_local_level3_pipeline.js --check-only
+```
+
+The pipeline validates article/extraction data, tactical claims, review outlines, generated Japanese reviews, deterministic output, and saved JSON consistency. It is local-only: no crawler, external API, paid API, secret, Pages deploy, or external article body/image storage is used.

@@ -93,7 +93,7 @@
       "sample_disagreement_requires_review",
       "single_source_unapproved_policy_with_opposing_sample"
     ],
-    "disagreement_summary_ja": "ソース間で評価が分かれるclaimがあるため、相違点を独立した節に分けて扱う。",
+    "disagreement_summary_ja": "ソース間で評価が分かれるclaimがあります。対立する見方を分けて扱い、どちらかを正解として断定しません。",
     "source_ids": [
       "candidate-longform-analysis",
       "candidate-statistics-source",

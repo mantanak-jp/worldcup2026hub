@@ -152,6 +152,10 @@ Sample data should not become `auto_published` unless approved source policy and
 - `tools/generate_review_outline_sample.js`: validated claims to deterministic outlines
 - `tools/normalize_review_outlines.js`: outline contract and deterministic recalculation validator
 - `tools/generate_structured_review_sample.js`: outlines to deterministic generated reviews
+- `tools/normalize_generated_match_reviews.js`: generated review contract, refs, coverage, confidence, status, and deterministic output validator
 - `tools/generate_match_review_sample.js`: backward-compatible single-match wrapper
+- `tools/run_local_level3_pipeline.js`: one-command local E2E gate from extraction validation to generated review validation
 
 These tools are local-only. They do not crawl, access the network, call external APIs, use secrets, store article bodies, store translated article text, or save external images.
+
+`run_local_level3_pipeline.js --check-only` is the default safe mode for CI and local verification. It fails if generated outlines or generated reviews differ from the saved JSON. `--write` is reserved for feature branches when regenerating deterministic sample data. Any invalid article/extraction, ungrounded claim, broken outline reference, generated review mismatch, prohibited content-like field, coverage mismatch, confidence mismatch, or nondeterministic output stops the pipeline.

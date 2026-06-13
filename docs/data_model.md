@@ -120,6 +120,8 @@ Claims without supporting extraction, article, and source references are invalid
 
 `tools/generate_review_outline_sample.js` aggregates validated tactical claims by match and emits deterministic outlines. `tools/normalize_review_outlines.js` validates saved outlines against the same deterministic rules. `tools/generate_structured_review_sample.js` generates outline-derived Japanese review records. `tools/generate_match_review_sample.js` remains a backward-compatible wrapper for one match.
 
+`tools/normalize_generated_match_reviews.js` validates generated review refs, section shape, source coverage, confidence, status, missing inputs, disagreement summaries, generation stability keys, and prohibited content-like fields. `tools/run_local_level3_pipeline.js` runs the full local Level 3 gate and fails on partial success, broken refs, ungrounded claims, deterministic mismatches, or unsafe generated-review fields.
+
 This local pipeline is a sample / dry-run path. It does not run real crawling, call external APIs, use secrets, add paid services, deploy Pages, commit back to the repository, or store external article bodies/images.
 
 ## Crawl Run Handling

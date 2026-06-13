@@ -159,3 +159,18 @@ Low-confidence and insufficient-source reviews should be short. Missing inputs f
 `auto_published` is allowed when the UI displays source coverage, confidence, generation version, generated time, and status.
 
 Low-confidence or insufficient-source reviews may still be published if clearly labeled.
+
+## End-To-End Local Gate
+
+Wave 3 completes the local-only Level 3 dry-run path:
+
+```text
+articles
+  -> article_extractions
+  -> tactical_claims
+  -> review_outlines
+  -> generated_match_reviews
+  -> static site display
+```
+
+`tools/run_local_level3_pipeline.js --check-only` verifies every intermediate layer and stops on the first invalid stage. The gate treats ungrounded claims, broken source/article/extraction refs, prohibited content fields, confidence or source coverage mismatches, and nondeterministic generator output as failures. It does not run a crawler, scrape sites, access external APIs, deploy Pages, or store external article bodies/images.
