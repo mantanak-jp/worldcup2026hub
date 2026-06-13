@@ -95,3 +95,13 @@ Local generators may read `data/articles.json` and `data/article_extractions.jso
 Article extraction input must remain source-based and metadata-oriented. Generators may use short original extraction notes, linked claim IDs, confidence, missing inputs, source IDs, and article IDs. They must not invent tactical claims or infer coach intent beyond local source-based records.
 
 Generated reviews should carry `missing_inputs` forward so the UI can explain why a review remains `insufficient_sources` or `low_confidence`.
+
+## Claim Inputs
+
+Review generation should prefer validated `data/tactical_claims.json` records over free-form extraction text. Claims must carry supporting extraction, article, and source references. Unsupported claims should be excluded from outlines and generated reviews.
+
+Claim confidence, confidence factors, uncertainty, disagreement status, and missing inputs should flow into review outlines so low-confidence or disputed points are not presented as settled conclusions.
+
+When `disagreement_status` is not `none`, generators should route the claim to source-disagreement sections or low-confidence review notes. They should not promote either side into consensus unless later normalized claims provide stronger supporting source coverage.
+
+The local generators retain read-only fallback support for the legacy `claim_ja` field, but new generated review inputs should use `claim_text_ja`.

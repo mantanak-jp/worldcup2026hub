@@ -99,6 +99,14 @@ Article IDs, extraction IDs, source IDs, match IDs, team IDs, and linked claim I
 
 Unapproved sources must remain metadata-only or manual-review-needed until source policy review is complete.
 
+## Tactical Claim Handling
+
+`data/tactical_claims.json` stores source-grounded Level 3 tactical claims. A claim should include stable IDs, match/team references, claim type, tactical phase/theme, concise original Japanese claim text, supporting extraction/article/source IDs, optional opposing extraction/article/source references, confidence factors, uncertainty, disagreement status, missing inputs, duplicate key, generation stability key, timestamps, and status.
+
+Claims without supporting extraction, article, and source references are invalid. Article and source refs are validated against the extraction records so unsupported claims cannot enter generated reviews. Claim confidence is a deterministic local quality signal based on source count, article count, extraction count, language/source-type diversity, source policy state, opposing evidence, extraction confidence, metadata-only evidence, and missing inputs.
+
+`tools/normalize_tactical_claims.js` validates the claim layer without creating new claims or accessing external sources. New data should use `claim_text_ja`, `team_ids`, `tactical_phase`, and `tactical_theme`; local generators keep read-only fallback support for older `claim_ja` fixtures only.
+
 ## Crawl Run Handling
 
 `data/crawl_runs.json` records planned, dry-run, scheduled, and match-window crawler runs. Early records may be samples with zero discovered/stored/extracted counts so the UI and workflow can validate shape before real crawling is approved.

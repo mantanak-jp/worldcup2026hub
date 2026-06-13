@@ -2,7 +2,7 @@
   {
     "id": "outline-match-001-sample",
     "match_id": "match-001",
-    "status": "auto_draft",
+    "status": "insufficient_sources",
     "section_claims": {
       "match_flow": ["claim-match-001-transition-sample"],
       "initial_shapes": [],
@@ -10,18 +10,18 @@
       "turning_points": [],
       "key_players": [],
       "substitutions_and_adjustments": [],
-      "source_consensus": ["claim-match-001-pressing-sample"],
-      "source_disagreement": [],
+      "source_consensus": ["claim-match-001-transition-sample"],
+      "source_disagreement": ["claim-match-001-pressing-sample", "claim-match-001-pressing-disagreement-sample"],
       "next_match_implications": []
     },
     "source_coverage": {
-      "source_count": 1,
-      "article_count": 0,
-      "languages": ["en"],
+      "source_count": 3,
+      "article_count": 3,
+      "languages": ["en", "ja"],
       "coverage_level": "insufficient_sources"
     },
-    "confidence": 0.32,
-    "missing_inputs": ["multiple independent tactical sources", "article extractions", "post-match event data"],
+    "confidence": 0.21,
+    "missing_inputs": ["approved source policies", "post-match event data", "disagreement review"],
     "generated_at": "2026-06-12T00:00:00+09:00",
     "generation_version": "level3-outline-v0"
   }

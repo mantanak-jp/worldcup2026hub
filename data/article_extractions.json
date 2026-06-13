@@ -106,5 +106,41 @@
     "updated_at": "2026-06-12T00:00:00Z",
     "generation_stability_key": "extraction-match-001-transition-sample:v1",
     "notes": "Metadata-to-claim bridge sample. No full text storage."
+  },
+  {
+    "id": "extraction-match-001-pressing-opposition-sample",
+    "article_id": "article-match-001-longform-sample",
+    "source_id": "candidate-longform-analysis",
+    "match_id": "match-001",
+    "team_ids": ["team-canada"],
+    "language": "en",
+    "article_type": "longform_analysis",
+    "extraction_method": "manual_sample_short_note",
+    "extraction_status": "sample_unapproved_source",
+    "extracted_topics": ["pressing", "high_press"],
+    "tactical_phases": ["out_of_possession"],
+    "tactical_themes": ["pressing", "high_press"],
+    "named_players": [],
+    "named_managers": [],
+    "short_notes_ja": "カナダの守備論点について、より高い位置での制限を重視する可能性を示す対立サンプル。",
+    "linked_claim_ids": ["claim-match-001-pressing-disagreement-sample"],
+    "supporting_source_ids": ["candidate-longform-analysis"],
+    "supporting_article_ids": ["article-match-001-longform-sample"],
+    "opposing_source_ids": [],
+    "opposing_article_ids": [],
+    "confidence": 0.28,
+    "uncertainty": "single_source_unapproved_policy",
+    "disagreement_notes_ja": "mid block sampleとは守備開始位置の解釈が異なる。",
+    "missing_inputs": ["approved long-form source", "independent second source", "event data"],
+    "evidence_metadata": {
+      "evidence_level": "single_source_disagreement_sample",
+      "has_event_data": false,
+      "has_direct_quote": false,
+      "has_full_text": false
+    },
+    "created_at": "2026-06-13T00:00:00Z",
+    "updated_at": "2026-06-13T00:00:00Z",
+    "generation_stability_key": "extraction-match-001-pressing-opposition-sample:v1",
+    "notes": "Short original extraction note for disagreement validation. No copied article body or long quote."
   }
 ]
